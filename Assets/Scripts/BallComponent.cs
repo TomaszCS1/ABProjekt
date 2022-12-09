@@ -21,7 +21,7 @@ public class BallComponent : MonoBehaviour
         Debug.Log("Frames passed =" + frames);
 
         framerate = 1 / Time.deltaTime;
-        Debug.Log("Liczba klatek na sekunde" + framerate);
+        Debug.Log("Liczba klatek na sekunde =" + framerate);
 
     }
 }
