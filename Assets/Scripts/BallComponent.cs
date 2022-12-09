@@ -39,8 +39,13 @@ public class BallComponent : MonoBehaviour
         //6.
         if (vecScale.x <= scaleUpperLimit)
         {
+<<<<<<< HEAD
             vecScale.x += scaleIncrement;
             vecScale.y += scaleIncrement;
+=======
+            vecScale.x += 1.0f;
+            vecScale.y += 1.0f;
+>>>>>>> 24f21167ecace20a1145f94cfba751d9f76973b3
 
             transform.localScale = vecScale;
         }
