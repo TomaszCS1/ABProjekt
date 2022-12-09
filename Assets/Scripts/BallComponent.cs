@@ -11,9 +11,9 @@ public class BallComponent : MonoBehaviour
     public float rotationSpeed = 10.0f;
     public Vector3 vecRotation = Vector3.zero;
 
-    public Vector3 vecScale;
+    public Vector2 vecScale;
     public float scaleUpperLimit = 3.0f;
-    public float scaleGrowRatio = 0.100000000f;
+    public float scaleIncrement = 0.100000000f;
 
 
     void Start()
@@ -36,52 +36,63 @@ public class BallComponent : MonoBehaviour
         //Debug.Log("Liczba klatek na sekunde =" + framerate);
 
 
-        //5.
+        //6.
         if (vecScale.x <= scaleUpperLimit)
         {
-            vecScale.x += scaleGrowRatio;
-            vecScale.y += scaleGrowRatio;
-            vecScale.z += scaleGrowRatio;
+            vecScale.x += 1.0f;
+            vecScale.y += 1.0f;
+
             transform.localScale = vecScale;
         }
+
     }
 
  }
 
-    //4.
-    //if (transform.localScale.x <= scaleUpperLimit)
-    //{
-    //    transform.localScale = transform.localScale + new Vector3(scaleGrowRatio, scaleGrowRatio, scaleGrowRatio);
+//5.
+//if (vecScale.x <= scaleUpperLimit)
+//{
+//    vecScale.x += scaleIncrement;
+//    vecScale.y += scaleIncrement;
+//    vecScale.z += scaleIncrement;
+//    transform.localScale = vecScale;
+//}
 
 
-    //3.
-    //while (vecScale.x <= scaleUpperLimit)
-    //{
-    //    vecScale.x += scaleGrowRatio;
-    //    vecScale.y += scaleGrowRatio;
-    //    vecScale.z += scaleGrowRatio;
-    //    transform.localScale = vecScale;
-    //};
+//4.
+//if (transform.localScale.x <= scaleUpperLimit)
+//{
+//    transform.localScale = transform.localScale + new Vector3(scaleIncrement, scaleIncrement, scaleIncrement);
 
-    //2.
-    //do
-    //{
-    //    vecScale.x += scaleGrowRatio;
-    //    vecScale.y += scaleGrowRatio;
-    //    vecScale.z += scaleGrowRatio;
-    //    transform.localScale = vecScale;
-    //}
-    //while (vecScale.x >= 3) ;
 
-    //1.
-    //do
-    //{
+//3.
+//while (vecScale.x <= scaleUpperLimit)
+//{
+//    vecScale.x += scaleIncrement;
+//    vecScale.y += scaleIncrement;
+//    vecScale.z += scaleIncrement;
+//    transform.localScale = vecScale;
+//};
 
-    //    transform.localScale = vecScale * (1 + scaleGrowRatio);
-    //    vecScale = vecScale * (1 + scaleGrowRatio);
+//2.
+//do
+//{
+//    vecScale.x += scaleIncrement;
+//    vecScale.y += scaleIncrement;
+//    vecScale.z += scaleIncrement;
+//    transform.localScale = vecScale;
+//}
+//while (vecScale.x >= 3) ;
 
-    //}
-    //while (vecScale.x < scaleUpperLimit);
+//1.
+//do
+//{
+
+//    transform.localScale = vecScale * (1 + scaleIncrement);
+//    vecScale = vecScale * (1 + scaleIncrement);
+
+//}
+//while (vecScale.x < scaleUpperLimit);
 
 
 
