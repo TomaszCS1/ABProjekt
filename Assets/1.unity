@@ -227,7 +227,9 @@ MonoBehaviour:
   vecTransform: {x: 0, y: 0, z: 0}
   vecScale: {x: 1, y: 1}
   scaleUpperLimit: 3
-  scaleIncrement: 0.1
+  scaleLowerLimit: 1
+  scaleIncrement: 1
+  scaleUp: 1
 --- !u!1 &1441611385
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,9 +15,11 @@ public class BallComponent : MonoBehaviour
     public Vector3 vecTransform;
     public Vector2 vecScale;
     public float scaleUpperLimit = 3.0f;
-    public float scaleIncrement = 0.100000000f;
-    bool moveForward = true;
-    bool scaleUp = true;
+    public float scaleLowerLimit = 1.0f;
+
+    public float scaleIncrement = 1.0f;
+    //bool moveForward = true;
+    public bool scaleUp = true;
 
 
     void Start()
@@ -25,8 +27,6 @@ public class BallComponent : MonoBehaviour
 
     }
     
-
-
 
 
     // Update is called once per frame
@@ -44,41 +44,64 @@ public class BallComponent : MonoBehaviour
 
 
         if (vecScale.x <= scaleUpperLimit & scaleUp)
-        {
+        {                                                   // grow up 
             vecScale.x += scaleIncrement*Time.deltaTime;
             vecScale.y += scaleIncrement*Time.deltaTime;
             transform.localScale = vecScale;
+                       
+        }
+         else if (vecScale.x <= scaleUpperLimit & !scaleUp & vecScale.x>scaleLowerLimit) // grow down 
+        {
+            vecScale.x -= scaleIncrement * Time.deltaTime;
+            vecScale.y -= scaleIncrement * Time.deltaTime;
+            transform.localScale = vecScale;
+        }
 
-            vecRotation += Vector3.forward * rotationSpeed;
-            transform.rotation = Quaternion.Euler(vecRotation);
+        else if (vecScale.x>scaleUpperLimit & scaleUp)      // upper switch
+        {
+            scaleUp = !scaleUp;
+            vecScale.x -= scaleIncrement * Time.deltaTime;
+            vecScale.y -= scaleIncrement * Time.deltaTime;
+            transform.localScale = vecScale;
+        }
 
-            if (distance <= 3.0 & moveForward)
-            {
-                transform.position += Vector3.up * Time.deltaTime * SpeedY;
-                transform.position += Vector3.left * Time.deltaTime * SpeedX;
-            }
-            else if (distance <= 3.0 & !moveForward )
-            {
-                transform.position -= Vector3.up * Time.deltaTime * SpeedY;
-                transform.position -= Vector3.left * Time.deltaTime * SpeedX;
-            }
-            else if (distance > 3.0 & moveForward)
-            {
-                moveForward= !moveForward;
-                transform.position -= Vector3.up * Time.deltaTime * SpeedY;
-                transform.position -= Vector3.left * Time.deltaTime * SpeedX;
-            }
-            else if (distance > 3.0 & !moveForward)
-            {
-                moveForward = true;
-                transform.position += Vector3.up * Time.deltaTime * SpeedY;
-                transform.position += Vector3.left * Time.deltaTime * SpeedX;
-            }
-        } 
-
+        else if (vecScale.x < scaleLowerLimit & !scaleUp)   //lower switch
+        {
+            scaleUp = !scaleUp;
+            vecScale.x += scaleIncrement * Time.deltaTime;
+            vecScale.y += scaleIncrement * Time.deltaTime;
+            transform.localScale = vecScale;
+        }
     }
+ 
+}
 
- }
+//vecRotation += Vector3.forward * rotationSpeed;
+//transform.rotation = Quaternion.Euler(vecRotation);
+
+//if (distance <= 3.0 & moveForward)
+//{
+//    transform.position += Vector3.up * Time.deltaTime * SpeedY;
+//    transform.position += Vector3.left * Time.deltaTime * SpeedX;
+//}
+//else if (distance <= 3.0 & !moveForward )
+//{
+//    transform.position -= Vector3.up * Time.deltaTime * SpeedY;
+//    transform.position -= Vector3.left * Time.deltaTime * SpeedX;
+//}
+//else if (distance > 3.0 & moveForward)
+//{
+//    moveForward= !moveForward;
+//    transform.position -= Vector3.up * Time.deltaTime * SpeedY;
+//    transform.position -= Vector3.left * Time.deltaTime * SpeedX;
+//}
+//else if (distance > 3.0 & !moveForward)
+//{
+//    moveForward = true;
+//    transform.position += Vector3.up * Time.deltaTime * SpeedY;
+//    transform.position += Vector3.left * Time.deltaTime * SpeedX;
+//}
+
 
 //5.
 //if (vecScale.x <= scaleUpperLimit)
