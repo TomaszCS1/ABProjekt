@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,29 +7,28 @@ public class BallComponent : MonoBehaviour
     private int frames;
     private float framerate;
 
-    public float SpeedX = 1.0f;
-    public float SpeedY = 0.75f;
-    public float rotationSpeed = 0.10f;
+    public float Speed = 1.0f;
+    public float rotationSpeed = 10.0f;
     public Vector3 vecRotation = Vector3.zero;
-    public Vector3 vecTransform;
+
     public Vector2 vecScale;
     public float scaleUpperLimit = 3.0f;
     public float scaleIncrement = 0.100000000f;
 
-        
 
     void Start()
     {
 
     }
-    
-
-
-
 
     // Update is called once per frame
     void Update()
     {
+        // transform.position += Vector3.up * Time.deltaTime * Speed;
+
+        //vecRotation += Vector3.forward * rotationSpeed;
+        //transform.rotation = Quaternion.Euler(vecRotation);
+
         //++frames;
         //Debug.Log("Frames passed =" + frames);
 
@@ -38,28 +36,12 @@ public class BallComponent : MonoBehaviour
         //Debug.Log("Liczba klatek na sekunde =" + framerate);
 
 
-
-        
-
         //6.
         if (vecScale.x <= scaleUpperLimit)
         {
             vecScale.x += scaleIncrement*Time.deltaTime;
             vecScale.y += scaleIncrement*Time.deltaTime;
             transform.localScale = vecScale;
-
-            vecRotation += Vector3.forward * rotationSpeed;
-            transform.rotation = Quaternion.Euler(vecRotation);
-
-            if (transform.position.sqrMagnitude <=8.0 )
-            {
-                transform.position += Vector3.up * Time.deltaTime * SpeedY;
-                transform.position += Vector3.left * Time.deltaTime * SpeedX;
-            }else if (transform.position.sqrMagnitude > 8.0)
-            {
-                SpeedX = SpeedX * (-1);
-                SpeedY = SpeedY * (-1);
-            }
         }
 
     }
