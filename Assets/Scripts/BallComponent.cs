@@ -5,34 +5,12 @@ using UnityEngine;
 
 public class BallComponent : MonoBehaviour
 {
-    //2-------------------------------------
-    //public float SpeedX = 1.0f;
-    //public float SpeedY = 0.75f;
+
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
+ 
+ 
 
-    //public Vector3 vecTransform;
-    public Vector2 vecScale;
-    //public float scaleUpperLimit = 3.0f;
-    //public float scaleLowerLimit = 1.0f;
-
-    public float scaleIncrement = 0.8f;
-    //public bool scaleUp = true;
-
-    //3--------------------------------------
-    //cw bonusowe
-    //public enum GameState
-    //{
-    //    Start,
-    //    Pause,
-    //    Exit
-    //}
-    //GameState State = GameState.Start;
-    //--------------------------------------
-
-
-
-    //4------------------------------------------cwiczenie Pętle a tablice i kolekcje
     public enum BallInstruction
     {
         Idle = 0,
@@ -46,8 +24,6 @@ public class BallComponent : MonoBehaviour
 
     private int CurrentInstruction = 0;
 
-    //private float TimeInInstruction = 0.0f;
-
     public float Speed = 1.0f;
 
     public List<BallInstruction> Instructions = new List<BallInstruction>();
@@ -56,12 +32,13 @@ public class BallComponent : MonoBehaviour
 
     float distInInstruction = 0;
 
+    public Vector2 vecScale = Vector2.one;
+    public float scaleIncrement;
+    public float scaleUpperLimit = 3.0f;
+
     void Start()
     {
     }
-
-
-
 
     // Update is called once per frame
     void Update()
@@ -82,9 +59,13 @@ public class BallComponent : MonoBehaviour
                     vecRotation += Vector3.forward * rotationSpeed;
                     transform.rotation = Quaternion.Euler(vecRotation);
 
-                    vecScale.x += scaleIncrement * Time.deltaTime;
-                    vecScale.y += scaleIncrement * Time.deltaTime;
-                    transform.localScale = vecScale;
+                    if (vecScale.x <= scaleUpperLimit)
+                    {
+                        scaleIncrement = (distInInstruction / InstructionLength) * scaleUpperLimit;
+                        vecScale.x += scaleIncrement * Time.deltaTime;
+                        vecScale.y += scaleIncrement * Time.deltaTime;
+                        transform.localScale = vecScale;
+                    }
 
                     break;
 
@@ -96,8 +77,9 @@ public class BallComponent : MonoBehaviour
 
                     if (vecScale.x >= 1)
                     {
-                        vecScale.x -= (1 / scaleIncrement) * Time.deltaTime;
-                        vecScale.y -= (1 / scaleIncrement) * Time.deltaTime;
+                        scaleIncrement = (distInInstruction / InstructionLength)*scaleUpperLimit;
+                        vecScale.x -= ( scaleIncrement) * Time.deltaTime;
+                        vecScale.y -= (scaleIncrement) * Time.deltaTime;
                         transform.localScale = vecScale;
                     }
 
