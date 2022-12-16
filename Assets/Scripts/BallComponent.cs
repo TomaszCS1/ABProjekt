@@ -54,15 +54,11 @@ public class BallComponent : MonoBehaviour
 
     private float InstructionLength = 2.0f;
 
-    bool moveUp = true;
-    bool moveLeft;
-
     float distInInstruction = 0;
 
     void Start()
     {
     }
-
 
 
 
@@ -73,7 +69,7 @@ public class BallComponent : MonoBehaviour
 
         if (CurrentInstruction < Instructions.Count)
         {
-            //TimeInInstruction += Time.deltaTime;
+
             float RealSpeed = Speed * Time.deltaTime;
             distInInstruction += RealSpeed;
 
@@ -139,10 +135,10 @@ public class BallComponent : MonoBehaviour
 
 
 
-            if (distInInstruction > InstructionLength & moveUp)                                  {
+            if (distInInstruction > InstructionLength)                                  
+            {
                 ++CurrentInstruction;
                 distInInstruction = 0;
-
             }
 
         }
