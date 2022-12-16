@@ -220,16 +220,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f07d9ac84d130f14ba5925303a5f7770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SpeedX: 1
-  SpeedY: 0.75
-  rotationSpeed: 1
+  rotationSpeed: 5
   vecRotation: {x: 0, y: 0, z: 0}
-  vecTransform: {x: 0, y: 0, z: 0}
-  vecScale: {x: 1, y: 1}
-  scaleUpperLimit: 3
-  scaleLowerLimit: 1
-  scaleIncrement: 1
-  scaleUp: 1
+  vecScale: {x: 0, y: 0}
+  scaleIncrement: 0.8
+  Speed: 1
+  Instructions: 01000000020000000300000004000000
 --- !u!1 &1441611385
 GameObject:
   m_ObjectHideFlags: 0
