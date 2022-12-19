@@ -222,10 +222,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotationSpeed: 5
   vecRotation: {x: 0, y: 0, z: 0}
-  vecScale: {x: 0, y: 0}
-  scaleIncrement: 0.8
   Speed: 1
   Instructions: 01000000020000000300000004000000
+  vecScale: {x: 0, y: 0}
+  scaleIncrement: 0
+  scaleUpperLimit: 3
 --- !u!1 &1441611385
 GameObject:
   m_ObjectHideFlags: 0
