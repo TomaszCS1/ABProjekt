@@ -48,47 +48,47 @@ public class BallComponent : MonoBehaviour
     public bool isStopped = false;
     public int countPause = 0;
 
-    private void OnMouseEnter()
-    {
-        Debug.Log("Mouse entering over object");
-    }
+    //private void OnMouseEnter()
+    //{
+    //    Debug.Log("Mouse entering over object");
+    //}
 
-    private void OnMouseExit()
-    {
-        Debug.Log("Mouse leaving object");
-    }
+    //private void OnMouseExit()
+    //{
+    //    Debug.Log("Mouse leaving object");
+    //}
 
-    private void OnMouseDrag()
-    {
-        if (GameplayManager.Instance.Pause)
-            return;
+    //private void OnMouseDrag()
+    //{
+    //    if (GameplayManager.Instance.Pause)
+    //        return;
 
-        m_rigidbody.simulated = false;
+    //    m_rigidbody.simulated = false;
 
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(worldPos.x, worldPos.y, 0);
-    }
+    //    Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    //    transform.position = new Vector3(worldPos.x, worldPos.y, 0);
+    //}
 
-    private void Start()
-    {
-        m_rigidbody = GetComponent<Rigidbody2D>();
-    }
+    //private void Start()
+    //{
+    //    m_rigidbody = GetComponent<Rigidbody2D>();
+    //}
 
-    private void OnMouseUp()
-    {
-        m_rigidbody.simulated = true;
-    }
+    //private void OnMouseUp()
+    //{
+    //    m_rigidbody.simulated = true;
+    //}
 
 
-    private void OnPauseStop()
-    {
-        m_rigidbody.simulated = false;
-    }
+    //private void OnPauseStop()
+    //{
+    //    m_rigidbody.simulated = false;
+    //}e
 
-    private void OnPauseGo()
-    {
-        m_rigidbody.simulated = true;
-    }
+    //private void OnPauseGo()
+    //{
+    //    m_rigidbody.simulated = true;
+    //}
 
 
 
@@ -96,14 +96,14 @@ public class BallComponent : MonoBehaviour
     void Update()
     {
 
-        if (GameplayManager.Instance.Pause)
-        {
-            m_rigidbody.simulated = false;
-        }
-        else 
-        {
-            m_rigidbody.simulated = true;
-        }
+        //if (GameplayManager.Instance.Pause)
+        //{
+        //    m_rigidbody.simulated = false;
+        //}
+        //else 
+        //{
+        //    m_rigidbody.simulated = true;
+        //}
 
 
 
@@ -113,9 +113,9 @@ public class BallComponent : MonoBehaviour
         //if (Input.GetMouseButtonDown(0))
         //    Debug.Log("Left mouse button has been pressed");
 
-        //Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        //Debug.Log("Mouse position: " + Input.mousePosition);
-        //Debug.Log("Mouse in world position: " + worldPos);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Debug.Log("Mouse position: " + Input.mousePosition);
+        Debug.Log("Mouse in world position: " + worldPos);
 
 
 
