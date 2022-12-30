@@ -26,13 +26,12 @@ public class CAMERA_CONTROLLER : MonoBehaviour
 
     void FixedUpdate()
     {
-        //transform.position = followTarget.transform.position;
-        //transform.position = followTarget.transform.position + originalPosition;
-        
-        transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, followTarget.PhysicsSpeed *Time.deltaTime);
-
         if (!followTarget.IsSimulated())
             return;
+
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, followTarget.PhysicsSpeed *Time.deltaTime);
+
+        
 
     }
 

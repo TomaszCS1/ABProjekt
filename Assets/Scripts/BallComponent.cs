@@ -46,6 +46,9 @@ public class BallComponent : MonoBehaviour
 
     public Camera _mojaCamera;
 
+  
+
+     
     private void OnMouseDrag()
     {
 
@@ -55,7 +58,7 @@ public class BallComponent : MonoBehaviour
 
     private void Start()
     {
-
+        _mojaCamera = Camera.main;
         m_rigidbody = GetComponent<Rigidbody2D>();
 
     }
