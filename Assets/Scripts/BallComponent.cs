@@ -33,22 +33,23 @@ public class BallComponent : MonoBehaviour
     public float scaleSpeed = 2.0f;
     public bool isScaleTwo=false;
 
-    public Vector3 vecScaleDirLeft = new Vector3(-1, 1, 1);
-    public Vector3 vecScaleDirRight = new Vector3(1, 1, 1);
-    public Vector3 vecScaleDirDown = new Vector3(1, -1, 1);
-    public Vector3 vecDirUp = new Vector3(0, 0, -270);
-    Rigidbody2D m_rigidbody;
+  
+   
 
-    public bool isStopped = false;
+
     public int countPause = 0;
 
-   public float PhysicsSpeed;
+    public float PhysicsSpeed;
 
     public Camera _mojaCamera;
 
-  
+    private Rigidbody2D m_rigidbody;                // RigidBody dla kulki
 
-     
+    private SpringJoint2D m_connectedJoint;         // field do kontrolowania polaczenia sprezynowego w kuli
+    private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego
+    public float SlingStart = 0.5f;
+
+
     private void OnMouseDrag()
     {
 
@@ -59,8 +60,10 @@ public class BallComponent : MonoBehaviour
     private void Start()
     {
         _mojaCamera = Camera.main;
-        m_rigidbody = GetComponent<Rigidbody2D>();
+        m_rigidbody = GetComponent<Rigidbody2D>();      //GetComponent return reference to < component >
 
+        m_connectedJoint = GetComponent<SpringJoint2D>();
+        m_connectedBody = m_connectedJoint.connectedBody;
     }
 
 
@@ -92,9 +95,17 @@ public class BallComponent : MonoBehaviour
         }
 
 
-        PhysicsSpeed = m_rigidbody.velocity.magnitude;
-    
+        //PhysicsSpeed = m_rigidbody.velocity.magnitude;
+
+
+        if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) //jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
+        {
+            m_connectedJoint.enabled = false;                                         //wlacz polaczenie sprezynowe
+        }
+
+
     }
+
 
 
 }
