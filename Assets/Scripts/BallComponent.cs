@@ -46,16 +46,11 @@ public class BallComponent : MonoBehaviour
     private Rigidbody2D m_rigidbody;                // RigidBody dla kulki
 
     private SpringJoint2D m_connectedJoint;         // field do kontrolowania polaczenia sprezynowego w kuli
-    private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego
+    private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego kulki
     public float SlingStart = 0.5f;
+    public float MaxSpringDistance = 2.9f;
 
 
-    private void OnMouseDrag()
-    {
-
-        Vector3 worldPos = _mojaCamera.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = new Vector3(worldPos.x *Speed, worldPos.y*Speed, 0);
-    }
 
     private void Start()
     {
@@ -64,20 +59,17 @@ public class BallComponent : MonoBehaviour
 
         m_connectedJoint = GetComponent<SpringJoint2D>();
         m_connectedBody = m_connectedJoint.connectedBody;
-    }
 
 
-
-    public bool IsSimulated()
-    {
-        return m_rigidbody.simulated;
-    }
+        //m_connectedJoint.enabled = false;   //deaktywuje spring joint w kulce
+        //m_connectedBody.simulated = false;
 
 
+        // Set the damping ratio to a high value to reduce oscillation
+        m_connectedJoint.dampingRatio = 1.0f;
 
-    private void OnMouseUp()
-    {
-        m_rigidbody.simulated = true;
+        // Set the frequency to a low value to slow down oscillation
+        m_connectedJoint.frequency = 5.1f;
     }
 
 
@@ -95,9 +87,6 @@ public class BallComponent : MonoBehaviour
         }
 
 
-        //PhysicsSpeed = m_rigidbody.velocity.magnitude;
-
-
         if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) //jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
         {
             m_connectedJoint.enabled = false;                                         //wlacz polaczenie sprezynowe
@@ -105,6 +94,49 @@ public class BallComponent : MonoBehaviour
 
 
     }
+
+
+
+    private void OnMouseDrag()                      // 
+    {
+
+        m_connectedJoint.dampingRatio = 0.0f;
+        m_connectedJoint.frequency = 1.0f;
+
+        Vector3 worldPos = _mojaCamera.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = new Vector3(worldPos.x * Speed, worldPos.y * Speed, 0);
+
+        Vector2 newBallPos = new Vector3(worldPos.x, worldPos.y);
+        float CurJointDistance = Vector3.Distance(newBallPos, m_connectedBody.position);
+        if (CurJointDistance > MaxSpringDistance)
+        {
+            Vector2 direction = (newBallPos - m_connectedBody.position).normalized;
+            transform.position = m_connectedBody.position + direction * MaxSpringDistance;
+        }
+
+        else
+        {
+            transform.position = newBallPos;
+        }
+
+
+
+    }
+
+    public bool IsSimulated()                           // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
+    {
+        return m_rigidbody.simulated;
+    }
+
+
+
+    private void OnMouseUp()
+    {
+        m_rigidbody.simulated = true;
+    }
+
+
+
 
 
 
