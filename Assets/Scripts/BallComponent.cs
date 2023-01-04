@@ -50,26 +50,33 @@ public class BallComponent : MonoBehaviour
     public float SlingStart = 0.5f;
     public float MaxSpringDistance = 2.9f;
 
+    private LineRenderer m_lineRenderer;
+
+    private Vector2 slingLineFix = new Vector2(-0.5f,0);
+
+    private TrailRenderer m_trailRenderer;
+
 
 
     private void Start()
     {
         _mojaCamera = Camera.main;
-        m_rigidbody = GetComponent<Rigidbody2D>();      //GetComponent return reference to < component >
+
+        //GetComponent return reference to <Component>
+        m_rigidbody = GetComponent<Rigidbody2D>();      
 
         m_connectedJoint = GetComponent<SpringJoint2D>();
         m_connectedBody = m_connectedJoint.connectedBody;
-
-
-        //m_connectedJoint.enabled = false;   //deaktywuje spring joint w kulce
-        //m_connectedBody.simulated = false;
-
 
         // Set the damping ratio to a high value to reduce oscillation
         m_connectedJoint.dampingRatio = 1.0f;
 
         // Set the frequency to a low value to slow down oscillation
-        m_connectedJoint.frequency = 5.1f;
+        m_connectedJoint.frequency = 5.0f;
+
+        m_lineRenderer = GetComponent<LineRenderer>();
+        m_trailRenderer = GetComponent<TrailRenderer>();
+
     }
 
 
@@ -89,35 +96,41 @@ public class BallComponent : MonoBehaviour
 
         if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) //jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
         {
-            m_connectedJoint.enabled = false;                                         //wlacz polaczenie sprezynowe
+            m_connectedJoint.enabled = false;                                         //wylacz polaczenie sprezynowe  po wystrzeleniu kuli
+
+            m_lineRenderer.enabled = false;                                           // wylacz renderer po wystrzeleniu kuli
         }
-
-
     }
 
 
 
     private void OnMouseDrag()                      // 
     {
-
+        // CHANGES JOINT COMPONENT BACK AFTER MOUSE DRAG TO IMPROVE FLYING
         m_connectedJoint.dampingRatio = 0.0f;
         m_connectedJoint.frequency = 1.0f;
+
 
         Vector3 worldPos = _mojaCamera.ScreenToWorldPoint(Input.mousePosition);
         transform.position = new Vector3(worldPos.x * Speed, worldPos.y * Speed, 0);
 
         Vector2 newBallPos = new Vector3(worldPos.x, worldPos.y);
         float CurJointDistance = Vector3.Distance(newBallPos, m_connectedBody.position);
+
         if (CurJointDistance > MaxSpringDistance)
         {
             Vector2 direction = (newBallPos - m_connectedBody.position).normalized;
             transform.position = m_connectedBody.position + direction * MaxSpringDistance;
         }
-
         else
         {
             transform.position = newBallPos;
         }
+
+
+        // LINE RENDERER
+        m_lineRenderer.positionCount = 3;
+        m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position+slingLineFix, transform.position, m_connectedBody.position -slingLineFix});
 
 
 
