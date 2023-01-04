@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CAMERA_CONTROLLER : MonoBehaviour
+public class CameraController : MonoBehaviour
 {
-    private BallComponent followTarget;
+    private BallComponent ball;
     private Vector3 originalPosition;
 
 
@@ -12,7 +12,7 @@ public class CAMERA_CONTROLLER : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        followTarget = FindObjectOfType<BallComponent>();
+        ball = FindObjectOfType<BallComponent>();
         originalPosition = transform.position;
 
     }
@@ -26,13 +26,10 @@ public class CAMERA_CONTROLLER : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!followTarget.IsSimulated())
+        if (!ball.IsSimulated())
             return;
 
-        transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, followTarget.PhysicsSpeed *Time.deltaTime);
-
-        
-
+        transform.position = Vector3.MoveTowards(transform.position, originalPosition + ball.transform.position, ball.PhysicsSpeed *Time.deltaTime);
     }
 
 }
