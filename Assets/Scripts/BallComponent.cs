@@ -6,7 +6,6 @@ using UnityEngine;
 
 public class BallComponent : MonoBehaviour
 {
-
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
 
@@ -128,6 +127,12 @@ public class BallComponent : MonoBehaviour
         return m_rigidbody.simulated;
     }
 
+
+    public void WylaczJoint()
+    {
+        m_connectedJoint.enabled = false;
+        Debug.Log("joint disabled!");
+    }
 
 
     private void OnMouseUp()
