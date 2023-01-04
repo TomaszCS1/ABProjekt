@@ -6,6 +6,7 @@ using UnityEngine;
 
 public class BallComponent : MonoBehaviour
 {
+
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
 
@@ -31,15 +32,8 @@ public class BallComponent : MonoBehaviour
    
     public float scaleSpeed = 2.0f;
     public bool isScaleTwo=false;
-
-  
-   
-
-
     public int countPause = 0;
-
     public float PhysicsSpeed;
-
     public Camera _mojaCamera;
 
     private Rigidbody2D m_rigidbody;                // RigidBody dla kulki
@@ -55,7 +49,10 @@ public class BallComponent : MonoBehaviour
 
     private TrailRenderer m_trailRenderer;
 
+    private bool m_hitTheGround = false;
 
+    private Vector3 m_startPosition;
+    private Quaternion m_startRotation;
 
     private void Start()
     {
@@ -75,6 +72,11 @@ public class BallComponent : MonoBehaviour
 
         m_lineRenderer = GetComponent<LineRenderer>();
         m_trailRenderer = GetComponent<TrailRenderer>();
+
+        m_trailRenderer.enabled = false;
+
+        m_startPosition = transform.position;
+        m_startRotation = transform.rotation;
 
     }
 
@@ -98,7 +100,15 @@ public class BallComponent : MonoBehaviour
             m_connectedJoint.enabled = false;                                         //wylacz polaczenie sprezynowe  po wystrzeleniu kuli
 
             m_lineRenderer.enabled = false;                                           // wylacz renderer po wystrzeleniu kuli
+
+            m_trailRenderer.enabled = !m_hitTheGround;                                // jesli kolizja z Ground to TrailRender wylaczony
+
         }
+
+        if (Input.GetKeyUp(KeyCode.R))
+            Restart();
+
+
     }
 
 
@@ -128,9 +138,12 @@ public class BallComponent : MonoBehaviour
 
 
         // LINE RENDERER
-        m_lineRenderer.positionCount = 3;
-        m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position+slingLineFix, transform.position, m_connectedBody.position -slingLineFix});
+        SetLineRendererPoints();
+        //m_lineRenderer.positionCount = 3;
+        //m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position+slingLineFix, transform.position, m_connectedBody.position -slingLineFix});
 
+        // informacja czy kolizja z ground domyslnie ustawiona na false 
+        m_hitTheGround = false;
 
 
     }
@@ -141,19 +154,47 @@ public class BallComponent : MonoBehaviour
     }
 
 
-    public void WylaczJoint()
-    {
-        m_connectedJoint.enabled = false;
-        Debug.Log("joint disabled!");
-    }
-
 
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
+        { m_hitTheGround = true; }
+    }
 
+    private void Restart()
+    {
+        transform.position = m_startPosition;
+        transform.rotation = m_startRotation;
+
+        m_rigidbody.velocity = Vector3.zero;
+        m_rigidbody.angularVelocity = 0.0f;
+        m_rigidbody.simulated = true;
+
+        m_connectedJoint.enabled = true;
+        m_lineRenderer.enabled = true;
+        m_trailRenderer.enabled = false;
+
+        SetLineRendererPoints();
+        
+    }
+
+
+    private void SetLineRendererPoints()
+    {
+        m_lineRenderer.positionCount = 3;
+        m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position + slingLineFix, transform.position, m_connectedBody.position - slingLineFix });
+    }
+
+    public void WylaczJoint()
+    {
+        m_connectedJoint.enabled = false;
+        Debug.Log("joint disabled!");
+    }
 
 
 
