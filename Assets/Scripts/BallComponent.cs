@@ -54,6 +54,9 @@ public class BallComponent : MonoBehaviour
     private Vector3 m_startPosition;
     private Quaternion m_startRotation;
 
+    public bool isRestarted = false;
+
+
     private void Start()
     {
         _mojaCamera = Camera.main;
@@ -95,9 +98,9 @@ public class BallComponent : MonoBehaviour
         }
 
 
-        if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) //jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
+        if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) // jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
         {
-            m_connectedJoint.enabled = false;                                         //wylacz polaczenie sprezynowe  po wystrzeleniu kuli
+            m_connectedJoint.enabled = false;                                         // wylacz polaczenie sprezynowe  po wystrzeleniu kuli
 
             m_lineRenderer.enabled = false;                                           // wylacz renderer po wystrzeleniu kuli
 
@@ -108,12 +111,14 @@ public class BallComponent : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))
             Restart();
 
+        //Vvelocity of BallComponent used to move camera
+        PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
     }
 
 
 
-    private void OnMouseDrag()                      // 
+    private void OnMouseDrag()
     {
         // CHANGES JOINT COMPONENT BACK AFTER MOUSE DRAG TO IMPROVE FLYING
         m_connectedJoint.dampingRatio = 0.0f;
@@ -180,6 +185,8 @@ public class BallComponent : MonoBehaviour
         m_trailRenderer.enabled = false;
 
         SetLineRendererPoints();
+
+        isRestarted = true;
         
     }
 
