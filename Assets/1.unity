@@ -335,7 +335,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344066667}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.96, y: -2.07, z: -1.9838933}
+  m_LocalPosition: {x: 11.96, y: -3.41, z: -1.9838933}
   m_LocalScale: {x: 0.8, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -973,6 +973,7 @@ MonoBehaviour:
   _mojaCamera: {fileID: 0}
   SlingStart: 0.5
   MaxSpringDistance: 2.5
+  isRestarted: 0
 --- !u!50 &1403078737
 Rigidbody2D:
   serializedVersion: 4
