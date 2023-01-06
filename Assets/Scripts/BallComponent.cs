@@ -154,6 +154,9 @@ public class BallComponent : MonoBehaviour
         {
             m_particleAtraktor.Play();
         }
+
+               
+
     }
 
     private void OnMouseDown()

@@ -15,7 +15,7 @@ public class BeachBallLevitate : MonoBehaviour
     /*wystawiamy parametry publiczne do wygodnej modyfikacji*/
     public float Amplitude = 10.0f;
     public float RotationSpeed = 50;
-    public float ScaleAmplitude = 3.0f;
+    public float ScaleAmplitude = 2.0f;
 
     void Start()
     {
