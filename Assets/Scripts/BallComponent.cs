@@ -61,6 +61,7 @@ public class BallComponent : MonoBehaviour
     private Quaternion m_startRotation;
 
     public bool isRestarted = false;
+    public bool soundPlayed = false; 
 
 
     private void Start()
@@ -123,15 +124,15 @@ public class BallComponent : MonoBehaviour
             m_audioSource.PlayOneShot(RestartSound);
         }
 
-
             //Velocity of BallComponent used to move camera
             PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
-
-        //If ball hits ground sound will be played
-        if (m_hitTheGround)
-        { m_audioSource.PlayOneShot(HitTheGroundSound); }
-
+        if (m_hitTheGround && soundPlayed==false)
+        {
+            SoundGround();
+            soundPlayed = true;
+        }
+       
     }
 
     private void OnMouseDown()
@@ -196,10 +197,6 @@ public class BallComponent : MonoBehaviour
 
     private void Restart()
     {
-
-        
-
-
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
 
@@ -220,8 +217,8 @@ public class BallComponent : MonoBehaviour
         SetLineRendererPoints();
 
         isRestarted = true;
+        soundPlayed = false;
 
-       
 
 
     }
@@ -232,6 +229,15 @@ public class BallComponent : MonoBehaviour
         m_lineRenderer.positionCount = 3;
         m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position + slingLineFix, transform.position, m_connectedBody.position - slingLineFix });
     }
+
+    public void SoundGround()
+    {
+        //If ball hits ground sound will be played
+        if (m_hitTheGround)
+        { m_audioSource.PlayOneShot(HitTheGroundSound); }
+
+    }
+
 
     public void WylaczJoint()
     {
