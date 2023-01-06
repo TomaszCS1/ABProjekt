@@ -10,7 +10,12 @@ public class BallComponent : MonoBehaviour
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
 
-
+    private AudioSource m_audioSource;
+    public AudioClip PullSound;
+    public AudioClip ShootSound;
+    public AudioClip RestartSound;
+    public AudioClip HitTheGroundSound;
+    
 
     public enum BallInstruction
     {
@@ -37,15 +42,16 @@ public class BallComponent : MonoBehaviour
     public Camera _mojaCamera;
 
     private Rigidbody2D m_rigidbody;                // RigidBody dla kulki
-
     private SpringJoint2D m_connectedJoint;         // field do kontrolowania polaczenia sprezynowego w kuli
     private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego kulki
+   
     public float SlingStart = 0.5f;
+  
     public float MaxSpringDistance = 2.9f;
 
     private LineRenderer m_lineRenderer;
 
-    private Vector2 slingLineFix = new Vector2(-0.5f,0);
+    private Vector2 slingLineFix = new Vector2(-0.3f,0);
 
     private TrailRenderer m_trailRenderer;
 
@@ -81,6 +87,8 @@ public class BallComponent : MonoBehaviour
         m_startPosition = transform.position;
         m_startRotation = transform.rotation;
 
+        m_audioSource = GetComponent<AudioSource>();
+
     }
 
 
@@ -109,14 +117,27 @@ public class BallComponent : MonoBehaviour
         }
 
         if (Input.GetKeyUp(KeyCode.R))
+        {
             Restart();
+            // plays Restart Sound 
+            m_audioSource.PlayOneShot(RestartSound);
+        }
 
-        //Vvelocity of BallComponent used to move camera
-        PhysicsSpeed = m_rigidbody.velocity.magnitude;
+
+            //Velocity of BallComponent used to move camera
+            PhysicsSpeed = m_rigidbody.velocity.magnitude;
+
+
+        //If ball hits ground sound will be played
+        if (m_hitTheGround)
+        { m_audioSource.PlayOneShot(HitTheGroundSound); }
 
     }
 
-
+    private void OnMouseDown()
+    {
+        m_audioSource.PlayOneShot(PullSound);
+    }
 
     private void OnMouseDrag()
     {
@@ -144,10 +165,9 @@ public class BallComponent : MonoBehaviour
 
         // LINE RENDERER
         SetLineRendererPoints();
-        //m_lineRenderer.positionCount = 3;
-        //m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position+slingLineFix, transform.position, m_connectedBody.position -slingLineFix});
+       
 
-        // informacja czy kolizja z ground domyslnie ustawiona na false 
+        // informacja czy nastapila kolizja z ground domyslnie ustawiona na false 
         m_hitTheGround = false;
 
 
@@ -163,6 +183,9 @@ public class BallComponent : MonoBehaviour
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
+
+        m_audioSource.PlayOneShot(ShootSound);
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -173,6 +196,10 @@ public class BallComponent : MonoBehaviour
 
     private void Restart()
     {
+
+        
+
+
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
 
@@ -184,10 +211,19 @@ public class BallComponent : MonoBehaviour
         m_lineRenderer.enabled = true;
         m_trailRenderer.enabled = false;
 
+        // Set the damping ratio to a high value to reduce oscillation
+        m_connectedJoint.dampingRatio = 1.0f;
+
+        // Set the frequency to a low value to slow down oscillation
+        m_connectedJoint.frequency = 5.0f;
+
         SetLineRendererPoints();
 
         isRestarted = true;
-        
+
+       
+
+
     }
 
 
