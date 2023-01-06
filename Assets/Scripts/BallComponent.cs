@@ -61,7 +61,14 @@ public class BallComponent : MonoBehaviour
     private Quaternion m_startRotation;
 
     public bool isRestarted = false;
-    public bool wasGroundSoundPlayed; 
+    public bool wasGroundSoundPlayed;
+
+    private Animator m_animator;
+
+    public ParticleSystem m_particles;
+
+    public ParticleSystem m_particleAtraktor;
+
 
 
     private void Start()
@@ -89,6 +96,12 @@ public class BallComponent : MonoBehaviour
         m_startRotation = transform.rotation;
 
         m_audioSource = GetComponent<AudioSource>();
+
+        m_animator = GetComponentInChildren<Animator>();
+
+        m_particles = GetComponentInChildren<ParticleSystem>();
+
+        m_particleAtraktor = GetComponentInChildren<ParticleSystem>();
 
     }
 
@@ -120,21 +133,27 @@ public class BallComponent : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))
         {
             Restart();
-            
+
         }
 
-         //Velocity of BallComponent used to move camera
-         PhysicsSpeed = m_rigidbody.velocity.magnitude;
+        //Velocity of BallComponent used to move camera
+        PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
 
         //If the ball drops Audio will be played one time until Restart()
         if (m_hitTheGround && wasGroundSoundPlayed == false)
         {
             m_audioSource.PlayOneShot(HitTheGroundSound);
-            
+
             wasGroundSoundPlayed = true;
         }
-       
+
+
+        // if tha ball hits the ground Atraktor starts - NOT WORKING (?)
+        if (m_hitTheGround)
+        {
+            m_particleAtraktor.Play();
+        }
     }
 
     private void OnMouseDown()
@@ -189,12 +208,19 @@ public class BallComponent : MonoBehaviour
 
         m_audioSource.PlayOneShot(ShootSound);
 
+        m_particles.Play();
+
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
         { m_hitTheGround = true; }
+
+        //calls animation
+        m_animator.enabled = true;
+        m_animator.Play(0); // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
     }
 
     private void Restart()
@@ -223,6 +249,7 @@ public class BallComponent : MonoBehaviour
 
         isRestarted = true;
 
+        //resets the atributes to play HitGroundSound in Update()
         m_hitTheGround=false;
         wasGroundSoundPlayed = false;
 
