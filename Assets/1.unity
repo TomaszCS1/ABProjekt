@@ -184,7 +184,7 @@ SpriteRenderer:
   m_SortingLayer: -1
   m_SortingOrder: 2
   m_Sprite: {fileID: 21300000, guid: f2ab6622280a8b54c95ecaf31cdc1003, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9858491, g: 0.9972796, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 2
@@ -868,7 +868,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1171356474}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 53932941a1588d44685accb018efccce, type: 3}
@@ -1232,6 +1232,7 @@ MonoBehaviour:
   SlingStart: 0.5
   MaxSpringDistance: 2.5
   isRestarted: 0
+  wasGroundSoundPlayed: 0
 --- !u!50 &1403078737
 Rigidbody2D:
   serializedVersion: 4

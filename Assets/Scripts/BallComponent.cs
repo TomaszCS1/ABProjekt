@@ -61,7 +61,7 @@ public class BallComponent : MonoBehaviour
     private Quaternion m_startRotation;
 
     public bool isRestarted = false;
-    public bool soundPlayed = false; 
+    public bool wasGroundSoundPlayed; 
 
 
     private void Start()
@@ -120,17 +120,19 @@ public class BallComponent : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.R))
         {
             Restart();
-            // plays Restart Sound 
-            m_audioSource.PlayOneShot(RestartSound);
+            
         }
 
-            //Velocity of BallComponent used to move camera
-            PhysicsSpeed = m_rigidbody.velocity.magnitude;
+         //Velocity of BallComponent used to move camera
+         PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
-        if (m_hitTheGround && soundPlayed==false)
+
+        //If the ball drops Audio will be played one time until Restart()
+        if (m_hitTheGround && wasGroundSoundPlayed == false)
         {
-            SoundGround();
-            soundPlayed = true;
+            m_audioSource.PlayOneShot(HitTheGroundSound);
+            
+            wasGroundSoundPlayed = true;
         }
        
     }
@@ -174,7 +176,7 @@ public class BallComponent : MonoBehaviour
 
     }
 
-    public bool IsSimulated()                           // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
+    public bool IsSimulated()                          // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
     {
         return m_rigidbody.simulated;
     }
@@ -216,8 +218,13 @@ public class BallComponent : MonoBehaviour
 
         SetLineRendererPoints();
 
+        // plays Restart Sound 
+        m_audioSource.PlayOneShot(RestartSound);
+
         isRestarted = true;
-        soundPlayed = false;
+
+        m_hitTheGround=false;
+        wasGroundSoundPlayed = false;
 
 
 
@@ -230,15 +237,7 @@ public class BallComponent : MonoBehaviour
         m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position + slingLineFix, transform.position, m_connectedBody.position - slingLineFix });
     }
 
-    public void SoundGround()
-    {
-        //If ball hits ground sound will be played
-        if (m_hitTheGround)
-        { m_audioSource.PlayOneShot(HitTheGroundSound); }
-
-    }
-
-
+   
     public void WylaczJoint()
     {
         m_connectedJoint.enabled = false;
