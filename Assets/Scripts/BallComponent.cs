@@ -72,6 +72,7 @@ public class BallComponent : MonoBehaviour
     public bool wasBallOnGround =false;
 
 
+    // START
     private void Start()
     {
         _mojaCamera = Camera.main;
@@ -104,10 +105,13 @@ public class BallComponent : MonoBehaviour
 
         m_particleAtraktor = GetComponentInChildren<ParticleSystem>();
 
+        GameplayManager.OnGamePaused += DoPause;
+        GameplayManager.OnGamePlaying += DoPlay;
+
     }
 
 
-
+    // UPDATE
     void Update()
     {
 
@@ -157,10 +161,27 @@ public class BallComponent : MonoBehaviour
         //    wasBallOnGround = true;
         //}
 
-       
-
-
     }
+
+
+    void OnDestroy()
+    {
+        GameplayManager.OnGamePaused -= DoPause;
+        GameplayManager.OnGamePlaying -= DoPlay;
+    }
+
+    private void DoPlay()
+    {
+        m_rigidbody.simulated = true;
+    }
+
+
+    private void DoPause()
+    {
+        m_rigidbody.simulated = false;
+    }
+
+
 
     private void OnMouseDown()
     {
