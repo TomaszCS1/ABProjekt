@@ -69,6 +69,7 @@ public class BallComponent : MonoBehaviour
 
     public ParticleSystem m_particleAtraktor;
 
+    public bool wasBallOnGround =false;
 
 
     private void Start()
@@ -140,7 +141,7 @@ public class BallComponent : MonoBehaviour
         PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
 
-        //If the ball drops Audio will be played one time until Restart()
+        //If the ball drops on the Ground - Audio will be played one time until Restart()
         if (m_hitTheGround && wasGroundSoundPlayed == false)
         {
             m_audioSource.PlayOneShot(HitTheGroundSound);
@@ -149,13 +150,15 @@ public class BallComponent : MonoBehaviour
         }
 
 
-        // if tha ball hits the ground Atraktor starts - NOT WORKING (?)
-        if (m_hitTheGround)
-        {
-            m_particleAtraktor.Play();
-        }
+        // //if tha ball hits the ground Atraktor starts - NOT WORKING (?)
+        //if (m_hitTheGround && wasBallOnGround == false)
+        //{
+        //    m_particles.Play();
+        //    wasBallOnGround = true;
+        //}
 
-               
+       
+
 
     }
 
@@ -188,7 +191,7 @@ public class BallComponent : MonoBehaviour
         }
 
 
-        // LINE RENDERER
+        // Line Renderer
         SetLineRendererPoints();
        
 
@@ -198,7 +201,7 @@ public class BallComponent : MonoBehaviour
 
     }
 
-    public bool IsSimulated()                          // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
+    public bool IsSimulated()  // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
     {
         return m_rigidbody.simulated;
     }
@@ -218,6 +221,7 @@ public class BallComponent : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        //collision with collision layer "Ground"
         if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
         { m_hitTheGround = true; }
 
@@ -257,7 +261,6 @@ public class BallComponent : MonoBehaviour
         wasGroundSoundPlayed = false;
 
 
-
     }
 
 
@@ -267,7 +270,8 @@ public class BallComponent : MonoBehaviour
         m_lineRenderer.SetPositions(new Vector3[] { m_connectedBody.position + slingLineFix, transform.position, m_connectedBody.position - slingLineFix });
     }
 
-   
+
+   //przyklad zmiany wlasciwosci komponentu
     public void WylaczJoint()
     {
         m_connectedJoint.enabled = false;
