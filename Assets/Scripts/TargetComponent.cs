@@ -7,6 +7,7 @@ public class TargetComponent : MonoBehaviour
 
     public bool m_hitThePlank = false;
 
+    private Rigidbody2D m_rigidBody;
 
     // uses particle system "ParticleHitPlanks" from Planks
     public ParticleSystem m_particlesHitPlank;
@@ -14,14 +15,23 @@ public class TargetComponent : MonoBehaviour
     // uses particle system "ParticleShootEffect" from BallComponent
     public BallComponent particleSystemBall;
 
-    // Start is called before the first frame update
+
+
+
+    // START 
     void Start()
     {
         //m_particlesHitPlank = GetComponent<ParticleSystem>();
+        m_rigidBody = GetComponent<Rigidbody2D>();
 
+        GameplayManager.OnGamePaused += DoPause;
+        GameplayManager.OnGamePlaying += DoPlay;
     }
 
-    // Update is called once per frame
+
+
+
+    // UPDATE 
     void Update()
     {
         if (m_hitThePlank)
@@ -37,6 +47,26 @@ public class TargetComponent : MonoBehaviour
 
         }
     }
+
+    void OnDestroy()
+    {
+        GameplayManager.OnGamePaused -= DoPause;
+        GameplayManager.OnGamePlaying -= DoPlay;
+    }
+
+
+    private void DoPlay()
+    {
+        m_rigidBody.simulated=true;
+    }
+
+
+    private void DoPause()
+    {
+        m_rigidBody.simulated = false;
+    }
+
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
