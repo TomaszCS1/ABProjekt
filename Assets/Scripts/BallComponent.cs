@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.Mathematics;
 using UnityEngine;
 
-public class BallComponent : MonoBehaviour
+public class BallComponent : InteractiveComponent
 {
 
     public float rotationSpeed = 5f;
@@ -70,6 +70,7 @@ public class BallComponent : MonoBehaviour
     public ParticleSystem m_particleAtraktor;
 
     public bool wasBallOnGround =false;
+    public bool m_hitThePlank = false;
 
 
     // START
@@ -105,6 +106,7 @@ public class BallComponent : MonoBehaviour
 
         m_particleAtraktor = GetComponentInChildren<ParticleSystem>();
 
+        // subscribes Events from GameplayManager
         GameplayManager.OnGamePaused += DoPause;
         GameplayManager.OnGamePlaying += DoPlay;
 
@@ -114,16 +116,6 @@ public class BallComponent : MonoBehaviour
     // UPDATE
     void Update()
     {
-
-        if (GameplayManager.Instance.Pause)
-        {
-            m_rigidbody.simulated = false;
-        }
-        else
-        {
-            m_rigidbody.simulated = true;
-        }
-
 
         if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) // jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
         {
@@ -135,23 +127,32 @@ public class BallComponent : MonoBehaviour
 
         }
 
-        if (Input.GetKeyUp(KeyCode.R))
-        {
-            Restart();
-
-        }
-
+      
         //Velocity of BallComponent used to move camera
         PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
 
-        //If the ball drops on the Ground - Audio will be played one time until Restart()
-        if (m_hitTheGround && wasGroundSoundPlayed == false)
-        {
-            m_audioSource.PlayOneShot(HitTheGroundSound);
+        // Metoda PlaySoundOnColision: >>>
+        ////If the ball drops on the Ground - Audio will be played one time until DoRestart()
+        //if (m_hitTheGround && wasGroundSoundPlayed == false)
+        //{
+        //    m_audioSource.PlayOneShot(HitTheGroundSound);
 
-            wasGroundSoundPlayed = true;
-        }
+        //    wasGroundSoundPlayed = true;
+
+
+
+        ////If the ball colides with Layer Target - Audio will be played one time until DoRestart()
+        //}
+        //if (m_hitThePlank)
+        //{
+        //    m_audioSource.PlayOneShot(HitTheGroundSound);
+
+        //    m_hitThePlank = false;
+        //}
+
+        // <<<
+
 
 
         // //if tha ball hits the ground Atraktor starts - NOT WORKING (?)
@@ -161,6 +162,27 @@ public class BallComponent : MonoBehaviour
         //    wasBallOnGround = true;
         //}
 
+    }
+
+
+    void PlaySoundOnColision()
+    {
+        //If the ball drops on the Ground - Audio will be played one time until DoRestart()
+        //if (m_hitTheGround && wasGroundSoundPlayed == false)
+        {
+            m_audioSource.PlayOneShot(HitTheGroundSound);
+
+            //wasGroundSoundPlayed = true;
+
+
+
+            //If the ball colides with Layer Target - Audio will be played one time until DoRestart()
+        }
+       
+            m_audioSource.PlayOneShot(HitTheGroundSound);
+
+            m_hitThePlank = false;
+      
     }
 
 
@@ -244,15 +266,26 @@ public class BallComponent : MonoBehaviour
     {
         //collision with collision layer "Ground"
         if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
-        { m_hitTheGround = true; }
+        {
+            PlaySoundOnColision();
+            m_hitTheGround = true; }
 
         //calls animation
         m_animator.enabled = true;
         m_animator.Play(0); // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
+
+
+        //collision with collision layer "Target"
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Target"))
+        {
+            PlaySoundOnColision();
+        }
     }
 
-    private void Restart()
+    public override void DoRestart()
     {
+        base.DoRestart();
+
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
 
@@ -277,7 +310,7 @@ public class BallComponent : MonoBehaviour
 
         isRestarted = true;
 
-        //resets the atributes to play HitGroundSound in Update()
+        //reset the atributes to play HitGroundSound in Update()
         m_hitTheGround=false;
         wasGroundSoundPlayed = false;
 
@@ -292,7 +325,7 @@ public class BallComponent : MonoBehaviour
     }
 
 
-   //przyklad zmiany wlasciwosci komponentu
+   //przyklad metody do zmiany wlasciwosci komponentu Joint
     public void WylaczJoint()
     {
         m_connectedJoint.enabled = false;

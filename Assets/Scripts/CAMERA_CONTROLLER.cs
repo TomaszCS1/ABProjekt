@@ -32,7 +32,7 @@ public class CAMERA_CONTROLLER : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, originalPosition + followTarget.transform.position, followTarget.PhysicsSpeed *Time.deltaTime);
 
-        Debug.Log("Transform.position = " + transform.position + " followTarget.PhysicsSpeed *Time.deltaTime = " + followTarget.PhysicsSpeed * Time.deltaTime);
+        //Debug.Log("Transform.position = " + transform.position + " followTarget.PhysicsSpeed *Time.deltaTime = " + followTarget.PhysicsSpeed * Time.deltaTime);
 
 
     }
