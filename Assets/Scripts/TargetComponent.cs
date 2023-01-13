@@ -53,7 +53,6 @@ public class TargetComponent :  InteractiveComponent
             m_particlesHitPlank.Play();
             //m_particlesHitPlank.Stop();
 
-
             m_hitThePlank = false;
 
         }
@@ -85,23 +84,24 @@ public class TargetComponent :  InteractiveComponent
 
 
     // this method removes functions DoPouse() and DoPlay() from Event: OnGamePaused and Event: OnGamePlaying when a Scene or game ends
-    void OnDestroy()
+    public override void OnDestroy()
     {
-        GameplayManager.OnGamePaused -= DoPause;
-        GameplayManager.OnGamePlaying -= DoPlay;
+        //GameplayManager.OnGamePaused -= DoPause;
+        //GameplayManager.OnGamePlaying -= DoPlay;
     }
 
 
-    private void DoPlay()
+    public override void DoPlay()
     {
-        m_rigidbody.simulated=true;
+        m_rigidbody.simulated = true;
     }
 
 
-    private void DoPause()
+    public override void DoPause()
     {
         m_rigidbody.simulated = false;
     }
+
 
 
 

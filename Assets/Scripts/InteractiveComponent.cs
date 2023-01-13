@@ -6,22 +6,25 @@ using System;
 
 public class InteractiveComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 
     public virtual void DoRestart()
     {}
 
 
-   
+    public virtual void DoPlay()
+    {}
+
+
+    public virtual void DoPause()
+    {}
+
+    public virtual void OnDestroy()
+    {
+        GameplayManager.OnGamePaused -= DoPause;
+        GameplayManager.OnGamePlaying -= DoPlay;
+    }
+
+
 
 }
