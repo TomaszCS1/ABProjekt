@@ -186,19 +186,19 @@ public class BallComponent : InteractiveComponent
     }
 
 
-    void OnDestroy()
+    public override void OnDestroy()
     {
-        GameplayManager.OnGamePaused -= DoPause;
-        GameplayManager.OnGamePlaying -= DoPlay;
+        //GameplayManager.OnGamePaused -= DoPause;
+        //GameplayManager.OnGamePlaying -= DoPlay;
     }
 
-    private void DoPlay()
+    public override void DoPlay()
     {
         m_rigidbody.simulated = true;
     }
 
 
-    private void DoPause()
+    public override void DoPause()
     {
         m_rigidbody.simulated = false;
     }
