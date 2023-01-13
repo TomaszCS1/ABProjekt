@@ -25,6 +25,8 @@ public class TargetComponent :  InteractiveComponent
     public TargetComponent plankSpriteRight;
     public TargetComponent plankSpriteUpper;
 
+    public AudioClip HitTheGroundSound;
+    private AudioSource m_audioSource;
 
 
     // START 
@@ -37,6 +39,8 @@ public class TargetComponent :  InteractiveComponent
         // subscribes Events from GameplayManager
         GameplayManager.OnGamePaused += DoPause;
         GameplayManager.OnGamePlaying += DoPlay;
+
+
     }
 
 
@@ -105,8 +109,8 @@ public class TargetComponent :  InteractiveComponent
         //collision with collision layer "Ball"
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         { 
-            m_hitThePlank = true;
-
+            m_audioSource.PlayOneShot(HitTheGroundSound);
+            Debug.Log("Colision with layer ball");
         }
 
     }  
