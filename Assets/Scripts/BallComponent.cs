@@ -131,54 +131,12 @@ public class BallComponent : InteractiveComponent
         //Velocity of BallComponent used to move camera
         PhysicsSpeed = m_rigidbody.velocity.magnitude;
 
-
-        // Metoda PlaySoundOnColision: >>>
-        ////If the ball drops on the Ground - Audio will be played one time until DoRestart()
-        //if (m_hitTheGround && wasGroundSoundPlayed == false)
-        //{
-        //    m_audioSource.PlayOneShot(HitTheGroundSound);
-
-        //    wasGroundSoundPlayed = true;
-
-
-
-        ////If the ball colides with Layer Target - Audio will be played one time until DoRestart()
-        //}
-        //if (m_hitThePlank)
-        //{
-        //    m_audioSource.PlayOneShot(HitTheGroundSound);
-
-        //    m_hitThePlank = false;
-        //}
-
-        // <<<
-
-
-
-        // //if tha ball hits the ground Atraktor starts - NOT WORKING (?)
-        //if (m_hitTheGround && wasBallOnGround == false)
-        //{
-        //    m_particles.Play();
-        //    wasBallOnGround = true;
-        //}
-
     }
 
 
-    void PlaySoundOnColision()
+   public void PlaySoundOnColision()
     {
-        //If the ball drops on the Ground - Audio will be played one time until DoRestart()
-        //if (m_hitTheGround && wasGroundSoundPlayed == false)
-        {
-            m_audioSource.PlayOneShot(HitTheGroundSound);
-
-            //wasGroundSoundPlayed = true;
-
-
-
-            //If the ball colides with Layer Target - Audio will be played one time until DoRestart()
-        }
-       
+              
             m_audioSource.PlayOneShot(HitTheGroundSound);
 
             m_hitThePlank = false;
@@ -268,18 +226,12 @@ public class BallComponent : InteractiveComponent
         if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
         {
             PlaySoundOnColision();
-            m_hitTheGround = true; }
+            }
 
         //calls animation
         m_animator.enabled = true;
         m_animator.Play(0); // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
 
-
-        //collision with collision layer "Target"
-        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Target"))
-        {
-            PlaySoundOnColision();
-        }
     }
 
     public override void DoRestart()
