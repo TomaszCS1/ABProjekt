@@ -15,9 +15,9 @@ public class TargetComponent :  InteractiveComponent
     // uses particle system "ParticleShootEffect" from BallComponent
     public BallComponent particleSystemBall;
 
-    private Vector3 m_startPositionPlankLeft = new Vector3(-0.28f, -1.9f, 0.0f);
-    private Vector3 m_startPositionPlankRight = new Vector3(0.38f, -1.9f, 0.0f);
-    private Vector3 m_startPositionPlankUpper = new Vector3(0f, -0.88f, 0.0f);
+    private Vector3 m_startPositionPlankLeft = new Vector3(-0.3f, -1.9f, 0.0f);
+    private Vector3 m_startPositionPlankRight = new Vector3(0.39f, -1.9f, 0.0f);
+    private Vector3 m_startPositionPlankUpper = new Vector3(0f, -0.85f, 0.0f);
     private Quaternion m_startRotationPlankLeft = Quaternion.Euler(0,0, 90.0f);
     private Quaternion m_startRotationPlankRight = Quaternion.Euler(0,0, 90.0f);
 
