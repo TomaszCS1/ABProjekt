@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 
 
-public class InteractiveComponent : MonoBehaviour
+public class InteractiveComponent : MonoBehaviour, IRestartableObject
 {
     
 
