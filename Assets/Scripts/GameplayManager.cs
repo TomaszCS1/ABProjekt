@@ -49,7 +49,7 @@ public class GameplayManager : Singleton<GameplayManager>
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
 
-    List<InteractiveComponent> m_restartableObjects = new List<InteractiveComponent>();
+    List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
 
     // Start is called before the first frame update
@@ -115,7 +115,7 @@ public class GameplayManager : Singleton<GameplayManager>
         GameObject[] rootGameObjects = SceneManager.GetActiveScene().GetRootGameObjects();
         foreach (var rootGameObject in rootGameObjects)
         {
-            InteractiveComponent[] childrenInterfaces = rootGameObject.GetComponentsInChildren<InteractiveComponent>();
+            IRestartableObject[] childrenInterfaces = rootGameObject.GetComponentsInChildren<IRestartableObject>();
 
             foreach (var childInterface in childrenInterfaces)
                 m_restartableObjects.Add(childInterface);
