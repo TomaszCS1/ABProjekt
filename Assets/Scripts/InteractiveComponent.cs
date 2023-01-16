@@ -8,6 +8,10 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
 {
     public Rigidbody2D m_rigidbody;
 
+    public AudioClip HitTheGroundSound;
+    public AudioSource m_audioSource;
+    public bool m_hitThePlank = false;
+
 
     public virtual void Start()
     {
@@ -42,6 +46,12 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
     }
 
 
-    public virtual void PlaySoundOnColision() { }
+    public virtual void PlaySoundOnColision() 
+    {
+        m_audioSource.PlayOneShot(HitTheGroundSound);
+
+        m_hitThePlank = false;
+
+    }
 
 }

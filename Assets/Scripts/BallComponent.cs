@@ -10,11 +10,11 @@ public class BallComponent : InteractiveComponent
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
 
-    private AudioSource m_audioSource;
+    //private AudioSource m_audioSource;
     public AudioClip PullSound;
     public AudioClip ShootSound;
     public AudioClip RestartSound;
-    public AudioClip HitTheGroundSound;
+    //public AudioClip HitTheGroundSound;
     
 
     public enum BallInstruction
@@ -70,7 +70,7 @@ public class BallComponent : InteractiveComponent
     public ParticleSystem m_particleAtraktor;
 
     public bool wasBallOnGround =false;
-    public bool m_hitThePlank = false;
+    //public bool m_hitThePlank = false;
 
 
     // START
@@ -153,17 +153,13 @@ public class BallComponent : InteractiveComponent
 
     public override void PlaySoundOnColision()
     {
-              
-            m_audioSource.PlayOneShot(HitTheGroundSound);
-
-            m_hitThePlank = false;
-      
+        base.PlaySoundOnColision();
     }
 
 
     public override void OnDestroy()
     {
-  
+        base.OnDestroy();
     }
 
     public override void DoPlay()

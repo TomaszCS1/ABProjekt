@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetComponent :  InteractiveComponent
 {
 
-    public bool m_hitThePlank = false;
+    //public bool m_hitThePlank = false;
 
     //protected Rigidbody2D m_rigidbody;
 
@@ -25,8 +25,8 @@ public class TargetComponent :  InteractiveComponent
     public TargetComponent plankSpriteRight;
     public TargetComponent plankSpriteUpper;
 
-    public AudioClip HitTheGroundSound;
-    private AudioSource m_audioSource;
+    //public AudioClip HitTheGroundSound;
+    //private AudioSource m_audioSource;
 
 
     // START 
@@ -123,10 +123,10 @@ public class TargetComponent :  InteractiveComponent
     
     public override void PlaySoundOnColision()
     {
+        base.PlaySoundOnColision();
+        //m_audioSource.PlayOneShot(HitTheGroundSound);
 
-        m_audioSource.PlayOneShot(HitTheGroundSound);
-
-        m_hitThePlank = false;
+        //m_hitThePlank = false;
 
     }
 
