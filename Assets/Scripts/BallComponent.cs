@@ -134,7 +134,24 @@ public class BallComponent : InteractiveComponent
     }
 
 
-   public void PlaySoundOnColision()
+    public override void OnCollisionEnter2D(Collision2D collision)
+    {
+        //collision with collision layer "Ground"
+        if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
+        {
+            PlaySoundOnColision();
+        }
+
+        //calls animation
+        m_animator.enabled = true;
+
+        // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
+        m_animator.Play(0);
+
+    }
+
+
+    public override void PlaySoundOnColision()
     {
               
             m_audioSource.PlayOneShot(HitTheGroundSound);
@@ -220,20 +237,7 @@ public class BallComponent : InteractiveComponent
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        //collision with collision layer "Ground"
-        if(collision.collider.gameObject.layer==LayerMask.NameToLayer("Ground"))
-        {
-            PlaySoundOnColision();
-            }
-
-        //calls animation
-        m_animator.enabled = true;
-        m_animator.Play(0); // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
-
-    }
-
+ 
     public override void DoRestart()
     {
         base.DoRestart();

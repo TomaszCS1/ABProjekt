@@ -41,9 +41,10 @@ public class TargetComponent :  InteractiveComponent
         GameplayManager.OnGamePlaying += DoPlay;
 
 
+        // przypisanie komponentu AudioSource do zmiennej m_audioSource
+        m_audioSource = GetComponent<AudioSource>();
+
     }
-
-
 
 
     // UPDATE 
@@ -77,8 +78,7 @@ public class TargetComponent :  InteractiveComponent
         m_rigidbody.velocity = Vector3.zero;
         m_rigidbody.angularVelocity = 0.0f;
         m_rigidbody.simulated = true;
-
-        
+                
     }
 
 
@@ -104,16 +104,25 @@ public class TargetComponent :  InteractiveComponent
 
 
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public override void OnCollisionEnter2D(Collision2D collision)
     {
         //collision with collision layer "Ball"
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
-        { 
-            m_audioSource.PlayOneShot(HitTheGroundSound);
-            Debug.Log("Colision with layer ball");
+        {
+            PlaySoundOnColision();
+            //m_audioSource.PlayOneShot(HitTheGroundSound);
+         
         }
 
-    }  
+    }
 
+    public override void PlaySoundOnColision()
+    {
+
+        m_audioSource.PlayOneShot(HitTheGroundSound);
+
+        m_hitThePlank = false;
 
     }
+
+}
