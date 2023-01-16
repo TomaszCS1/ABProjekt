@@ -41,7 +41,7 @@ public class BallComponent : InteractiveComponent
     public float PhysicsSpeed;
     public Camera _mojaCamera;
 
-    private Rigidbody2D m_rigidbody;                // RigidBody dla kulki
+ /*   protected Rigidbody2D m_rigidbody;   */             // RigidBody dla kulki
     private SpringJoint2D m_connectedJoint;         // field do kontrolowania polaczenia sprezynowego w kuli
     private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego kulki
    
@@ -74,7 +74,7 @@ public class BallComponent : InteractiveComponent
 
 
     // START
-    private void Start()
+    public override void Start()
     {
         _mojaCamera = Camera.main;
 
@@ -106,9 +106,7 @@ public class BallComponent : InteractiveComponent
 
         m_particleAtraktor = GetComponentInChildren<ParticleSystem>();
 
-        // subscribes Events from GameplayManager
-        GameplayManager.OnGamePaused += DoPause;
-        GameplayManager.OnGamePlaying += DoPlay;
+
 
     }
 
@@ -165,19 +163,18 @@ public class BallComponent : InteractiveComponent
 
     public override void OnDestroy()
     {
-        //GameplayManager.OnGamePaused -= DoPause;
-        //GameplayManager.OnGamePlaying -= DoPlay;
+  
     }
 
     public override void DoPlay()
     {
-        m_rigidbody.simulated = true;
+        base.DoPlay();
     }
 
 
     public override void DoPause()
     {
-        m_rigidbody.simulated = false;
+        base.DoPause();
     }
 
 
@@ -210,14 +207,12 @@ public class BallComponent : InteractiveComponent
             transform.position = newBallPos;
         }
 
-
         // Line Renderer
         SetLineRendererPoints();
        
 
         // informacja czy nastapila kolizja z ground domyslnie ustawiona na false 
         m_hitTheGround = false;
-
 
     }
 
@@ -247,9 +242,9 @@ public class BallComponent : InteractiveComponent
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
 
-        m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.angularVelocity = 0.0f;
-        m_rigidbody.simulated = true;
+        //m_rigidbody.velocity = Vector3.zero;
+        //m_rigidbody.angularVelocity = 0.0f;
+        //m_rigidbody.simulated = true;
 
         m_connectedJoint.enabled = true;
         m_lineRenderer.enabled = true;

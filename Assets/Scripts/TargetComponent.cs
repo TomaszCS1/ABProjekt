@@ -7,7 +7,7 @@ public class TargetComponent :  InteractiveComponent
 
     public bool m_hitThePlank = false;
 
-    private Rigidbody2D m_rigidbody;
+    //protected Rigidbody2D m_rigidbody;
 
     // uses particle system "ParticleHitPlanks" from Planks
     public ParticleSystem m_particlesHitPlank;
@@ -30,7 +30,7 @@ public class TargetComponent :  InteractiveComponent
 
 
     // START 
-    void Start()
+    public override void Start()
     {
         //m_particlesHitPlank = GetComponent<ParticleSystem>();
         m_rigidbody = GetComponent<Rigidbody2D>();
@@ -53,10 +53,8 @@ public class TargetComponent :  InteractiveComponent
         if (m_hitThePlank)
         {
             particleSystemBall.m_particles.Play();
-            //particleSystemBall.m_particles.Stop();
 
             m_particlesHitPlank.Play();
-            //m_particlesHitPlank.Stop();
 
             m_hitThePlank = false;
 
@@ -75,9 +73,9 @@ public class TargetComponent :  InteractiveComponent
 
         plankSpriteUpper.transform.localPosition = m_startPositionPlankUpper;
 
-        m_rigidbody.velocity = Vector3.zero;
-        m_rigidbody.angularVelocity = 0.0f;
-        m_rigidbody.simulated = true;
+        //m_rigidbody.velocity = Vector3.zero;
+        //m_rigidbody.angularVelocity = 0.0f;
+        //m_rigidbody.simulated = true;
                 
     }
 
@@ -92,13 +90,13 @@ public class TargetComponent :  InteractiveComponent
 
     public override void DoPlay()
     {
-        m_rigidbody.simulated = true;
+        base.DoPlay();
     }
 
 
     public override void DoPause()
-    {
-        m_rigidbody.simulated = false;
+     {
+        base.DoPause();
     }
 
 
@@ -112,12 +110,17 @@ public class TargetComponent :  InteractiveComponent
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
         {
             PlaySoundOnColision();
-            //m_audioSource.PlayOneShot(HitTheGroundSound);
-         
+
+            // Dodaje punkt za kazdym trafienem w cel
+            GameplayManager.Instance.Points += 1;
+
         }
 
-    }
+       
 
+
+    }
+    
     public override void PlaySoundOnColision()
     {
 

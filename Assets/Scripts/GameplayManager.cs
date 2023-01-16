@@ -51,14 +51,33 @@ public class GameplayManager : Singleton<GameplayManager>
 
     List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
+    private HUDController m_HUD;
+    private int m_points = 0;
+
+
+    public int Points
+    {
+        get { return m_points; }
+        set
+        {
+            m_points = value;
+            m_HUD.UpdatePoints(m_points);
+        }
+    }
+
+
 
     // Start is called before the first frame update
     void Start()
     {
-            // starts the game (L.60) and calls method GetAllRestartableObjects(L.61)
+            // starts the game and calls method GetAllRestartableObjects
             m_state = EGameState.Playing;
             GetAllRestartableObjects();
-        
+
+
+        m_HUD = FindObjectOfType<HUDController>();
+        Points = 0;
+
 
     }
 
@@ -72,20 +91,7 @@ public class GameplayManager : Singleton<GameplayManager>
         // if hit Space - change GameState from EGameState.Paused to EGameState.Playing od opposite 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            switch (GameState)
-            {
-                case EGameState.Playing:
-                    {
-                        GameState = EGameState.Paused;
-                    }
-                    break;
-
-                case EGameState.Paused:
-                    {
-                        GameState = EGameState.Playing;
-                    }
-                    break;
-            }
+            PlayPause();
         }
 
 
@@ -97,11 +103,27 @@ public class GameplayManager : Singleton<GameplayManager>
 
     }
 
+
+    public void PlayPause()
+    { 
+        switch (GameState)
+        {
+             case EGameState.Playing: { GameState = EGameState.Paused; } 
+                break;
+             case EGameState.Paused: { GameState = EGameState.Playing; } 
+                break;
+        }
+    }
+
+
     // runs method DoRestart() on every object implementing class InteractiveComponent
     private void Restart()
     {
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
+
+        // resetuje punkty
+        Points = 0;
 
 
     }
