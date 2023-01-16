@@ -25,7 +25,7 @@ public class InteractiveComponent : MonoBehaviour, IRestartableObject
         GameplayManager.OnGamePlaying -= DoPlay;
     }
 
-    public virtual void OnCollisionEnter2D(Collision2D collision) { }
+    //public virtual void OnCollisionEnter2D(Collision2D collision) { }
 
 
     public virtual void PlaySoundOnColision() { }

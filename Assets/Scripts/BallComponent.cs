@@ -134,7 +134,7 @@ public class BallComponent : InteractiveComponent
     }
 
 
-    public override void OnCollisionEnter2D(Collision2D collision)
+    public void OnCollisionEnter2D(Collision2D collision)
     {
         //collision with collision layer "Ground"
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ground"))
