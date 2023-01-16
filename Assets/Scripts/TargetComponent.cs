@@ -104,7 +104,9 @@ public class TargetComponent :  InteractiveComponent
 
 
 
+
     public  void OnCollisionEnter2D(Collision2D collision)
+
     {
         //collision with collision layer "Ball"
         if (collision.collider.gameObject.layer == LayerMask.NameToLayer("Ball"))
