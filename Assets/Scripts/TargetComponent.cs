@@ -20,6 +20,7 @@ public class TargetComponent :  InteractiveComponent
     private Vector3 m_startPositionPlankUpper = new Vector3(0f, -0.85f, 0.0f);
     private Quaternion m_startRotationPlankLeft = Quaternion.Euler(0,0, 90.0f);
     private Quaternion m_startRotationPlankRight = Quaternion.Euler(0,0, 90.0f);
+    private Quaternion m_startRotationPlankUpper = Quaternion.Euler(0,0, 0.0f);
 
     public TargetComponent plankSpriteLeft;
     public TargetComponent plankSpriteRight;
@@ -32,6 +33,8 @@ public class TargetComponent :  InteractiveComponent
     // START 
     public override void Start()
     {
+        base.Start();
+
         //m_particlesHitPlank = GetComponent<ParticleSystem>();
         m_rigidbody = GetComponent<Rigidbody2D>();
 
@@ -72,11 +75,8 @@ public class TargetComponent :  InteractiveComponent
         plankSpriteRight.transform.localRotation = m_startRotationPlankRight;
 
         plankSpriteUpper.transform.localPosition = m_startPositionPlankUpper;
+        plankSpriteUpper.transform.localRotation = m_startRotationPlankUpper;
 
-        //m_rigidbody.velocity = Vector3.zero;
-        //m_rigidbody.angularVelocity = 0.0f;
-        //m_rigidbody.simulated = true;
-                
     }
 
 
@@ -124,10 +124,7 @@ public class TargetComponent :  InteractiveComponent
     public override void PlaySoundOnColision()
     {
         base.PlaySoundOnColision();
-        //m_audioSource.PlayOneShot(HitTheGroundSound);
-
-        //m_hitThePlank = false;
-
+        
     }
 
 }

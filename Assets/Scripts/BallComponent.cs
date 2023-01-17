@@ -76,6 +76,8 @@ public class BallComponent : InteractiveComponent
     // START
     public override void Start()
     {
+        base.Start();
+         
         _mojaCamera = Camera.main;
 
         //GetComponent return reference to <Component>
@@ -237,10 +239,6 @@ public class BallComponent : InteractiveComponent
 
         transform.position = m_startPosition;
         transform.rotation = m_startRotation;
-
-        //m_rigidbody.velocity = Vector3.zero;
-        //m_rigidbody.angularVelocity = 0.0f;
-        //m_rigidbody.simulated = true;
 
         m_connectedJoint.enabled = true;
         m_lineRenderer.enabled = true;

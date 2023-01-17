@@ -54,6 +54,7 @@ public class GameplayManager : Singleton<GameplayManager>
     private HUDController m_HUD;
     private int m_points = 0;
 
+    public PauseMenuController m_PauseMenuController;
 
     public int Points
     {
@@ -65,6 +66,7 @@ public class GameplayManager : Singleton<GameplayManager>
         }
     }
 
+    private bool isPauseMenuActiv = false;
 
 
     // Start is called before the first frame update
@@ -97,13 +99,26 @@ public class GameplayManager : Singleton<GameplayManager>
 
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            Debug.Log("Quit");
-            Application.Quit();
+            // initiate event OnGamePaused(?)
+            GameState = EGameState.Paused;
+
+            // pause the game when PauseMenu activ
+            //PlayPause();
+
+            // deactivate HUD buttons when PauseMenu activ
+            if (!isPauseMenuActiv)
+            {
+                m_HUD.ButtonsDisable();
+                isPauseMenuActiv = !isPauseMenuActiv;
+            }
+            // whe second time Escape sets PauseMenuControl Inaktiv and activvate HUD Buttons
+            else { m_HUD.ButtonsEnable(); m_PauseMenuController.SetPanelVisible(false); isPauseMenuActiv = !isPauseMenuActiv; }
+                
         }
 
     }
 
-
+                                                                    
     public void PlayPause()
     { 
         switch (GameState)
@@ -116,17 +131,16 @@ public class GameplayManager : Singleton<GameplayManager>
     }
 
 
+
     // runs method DoRestart() on every object implementing class InteractiveComponent
-    private void Restart()
+    public void Restart()
     {
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
-
+     
         // resetuje punkty
         Points = 0;
-
-
-    }
+       }
 
 
     // collect all objects implementing class InteractiveComponent in to the list m_restartableObjects

@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class HUDController : MonoBehaviour
 {
-    public Button PauseButton;
+    public Button PauseButton; 
+    public Button RestartButton;
+
     public TMPro.TextMeshProUGUI PointsText;
 
 
@@ -14,9 +16,12 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        PauseButton.onClick.AddListener(delegate {
-            GameplayManager.Instance.PlayPause();
-        });
+        PauseButton.onClick.AddListener(delegate {GameplayManager.Instance.PlayPause(); });
+        
+        
+        RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });
+
+
     }
 
    
@@ -25,5 +30,15 @@ public class HUDController : MonoBehaviour
         PointsText.text = "Points: " + points;
     }
 
+    public void ButtonsDisable()
+    {
+        PauseButton.interactable = false;
+        RestartButton.interactable = false;
+    } 
+    public void ButtonsEnable()
+    {
+        PauseButton.interactable = true;
+        RestartButton.interactable = true;
+    }
 }
 
