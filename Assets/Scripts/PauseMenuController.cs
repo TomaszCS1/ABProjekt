@@ -9,8 +9,13 @@ public class PauseMenuController : MonoBehaviour
     public Button ResstartMenuButton;
     public Button QuitButton;
     public GameObject Panel;
+    public Button PopupYes;
+    public Button PopupNo;
+    public GameObject QuestionPopup1;
 
-    
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -26,12 +31,17 @@ public class PauseMenuController : MonoBehaviour
 
         ResstartMenuButton.onClick.AddListener(delegate { GameplayManager.Instance.Restart(); });
 
+        PopupYes.onClick.AddListener(delegate { OnPopupYes(); });
+
+        PopupNo.onClick.AddListener(delegate { OnPopupNo(); });
+
+        QuestionPopup1.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -45,17 +55,40 @@ public class PauseMenuController : MonoBehaviour
         SetPanelVisible(true);
     }
 
-    private void OnResume()
+    public void OnResume()
     {
         GameplayManager.Instance.GameState = GameplayManager.EGameState.Playing;
         SetPanelVisible(false);
-      
+
     }
+
 
     private void OnQuit()
     {
-        Application.Quit();
+        SetPopupVisible(true);
+        SetPanelVisible(false);
     }
+
+
+    public void SetPopupVisible(bool visible)
+    {
+        QuestionPopup1.SetActive(visible);
+    }
+
+
+    public void OnPopupNo()
+    {
+        SetPopupVisible(false);
+        SetPanelVisible(true);
+    }
+
+
+    public void OnPopupYes()
+    {
+        Application.Quit();
+
+    }
+
 
 
 }

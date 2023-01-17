@@ -93,7 +93,14 @@ public class GameplayManager : Singleton<GameplayManager>
         // if hit Space - change GameState from EGameState.Paused to EGameState.Playing od opposite 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            PlayPause();
+            if (!isPauseMenuActiv)
+            {
+                PlayPause();
+                m_HUD.ButtonsDisable();
+                isPauseMenuActiv = !isPauseMenuActiv;
+            }
+            else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+
         }
 
 
@@ -102,8 +109,8 @@ public class GameplayManager : Singleton<GameplayManager>
             // initiate event OnGamePaused(?)
             GameState = EGameState.Paused;
 
-            // pause the game when PauseMenu activ
-            //PlayPause();
+            //pause the game when PauseMenu activ
+            PlayPause();
 
             // deactivate HUD buttons when PauseMenu activ
             if (!isPauseMenuActiv)
@@ -112,8 +119,8 @@ public class GameplayManager : Singleton<GameplayManager>
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
             // whe second time Escape sets PauseMenuControl Inaktiv and activvate HUD Buttons
-            else { m_HUD.ButtonsEnable(); m_PauseMenuController.SetPanelVisible(false); isPauseMenuActiv = !isPauseMenuActiv; }
-                
+            else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+
         }
 
     }
