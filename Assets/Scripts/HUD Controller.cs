@@ -24,6 +24,7 @@ public class HUDController : MonoBehaviour
 
     }
 
+    //TEST MAIN W INNYM BRUNCH
    
     public void UpdatePoints(int points)
     {
