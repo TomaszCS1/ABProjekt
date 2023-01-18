@@ -41,8 +41,7 @@ public class PauseMenuController : MonoBehaviour
 
         QuestionPopup1.SetActive(false);
     }
-
- //TEST MAIN 
+//KONFLIKT NAPRAWIONY 
 
     public void SetPanelVisible(bool visible)
     {
