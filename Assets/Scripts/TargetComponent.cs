@@ -83,8 +83,8 @@ public class TargetComponent :  InteractiveComponent
     // this method removes functions DoPouse() and DoPlay() from Event: OnGamePaused and Event: OnGamePlaying when a Scene or game ends
     public override void OnDestroy()
     {
-        //GameplayManager.OnGamePaused -= DoPause;
-        //GameplayManager.OnGamePlaying -= DoPlay;
+        //GameplayManager.OnGamePaused -= DoPause;  //moved to InteractiveComponent
+        //GameplayManager.OnGamePlaying -= DoPlay;  //moved to InteractiveComponent
     }
 
 
@@ -111,7 +111,7 @@ public class TargetComponent :  InteractiveComponent
         {
             PlaySoundOnColision();
 
-            // Dodaje punkt za kazdym trafienem w cel
+            // adds point after every collision with every game object on layer Target
             GameplayManager.Instance.Points += 1;
 
         }

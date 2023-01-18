@@ -19,13 +19,14 @@ public class PauseMenuController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // AddListener(delegate{method();})
+        // Syntax: AddListener(delegate{method();})
         ResumeButton.onClick.AddListener(delegate { OnResume(); });
 
+        //On the beginning hides Panel
         Panel.SetActive(false);
 
-        // tym miejscu jest zasubskrybowany event OnGamePause w GM, kiedy OnGamPaused startuje, wykonana jest metoda OnPause
-        GameplayManager.OnEscape += OnPause;
+        // subscribes to event: OnGamePause in GM(GameplayManager). After OnGamePaused occurs, function: OnPause() starts 
+        GameplayManager.OnKeyEscape += OnPause;
 
 
         // quit menu:
@@ -41,12 +42,7 @@ public class PauseMenuController : MonoBehaviour
         QuestionPopup1.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
+ 
 
     public void SetPanelVisible(bool visible)
     {

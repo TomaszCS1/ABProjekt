@@ -41,10 +41,10 @@ public class BallComponent : InteractiveComponent
     public float PhysicsSpeed;
     public Camera _mojaCamera;
 
- /*   protected Rigidbody2D m_rigidbody;   */             // RigidBody dla kulki
-    private SpringJoint2D m_connectedJoint;         // field do kontrolowania polaczenia sprezynowego w kuli
-    private Rigidbody2D m_connectedBody;            // RigidBody dla punktu sprezynowego kulki
-   
+ 
+    private SpringJoint2D m_connectedJoint;         // field holds reference to component SprintJoint2D
+    private Rigidbody2D m_connectedBody;            // field holds reference to connected Rigid Body in component SprintJoint2D
+
     public float SlingStart = 0.5f;
   
     public float MaxSpringDistance = 2.9f;
@@ -70,7 +70,6 @@ public class BallComponent : InteractiveComponent
     public ParticleSystem m_particleAtraktor;
 
     public bool wasBallOnGround =false;
-    //public bool m_hitThePlank = false;
 
 
     // START
@@ -147,7 +146,7 @@ public class BallComponent : InteractiveComponent
         //calls animation
         m_animator.enabled = true;
 
-        // 0 tutaj to nr warstwy animacji, gdzie domyślna to 0
+        // 0 is the number of animation layer, (default value = 0)
         m_animator.Play(0);
 
     }
@@ -209,18 +208,19 @@ public class BallComponent : InteractiveComponent
         SetLineRendererPoints();
        
 
-        // informacja czy nastapila kolizja z ground domyslnie ustawiona na false 
+        // contains information if game object hit ground 
         m_hitTheGround = false;
 
     }
 
-    public bool IsSimulated()  // przekazuje informacje o tym czy objekt jest symulowany do klasy camera_controller
+    // returns the information if game object is currently simulated, used in CameraControl
+    public bool IsSimulated()  
     {
         return m_rigidbody.simulated;
     }
 
 
-
+    // function initiated after releasing LMB -> shoots BallComponent
     private void OnMouseUp()
     {
         m_rigidbody.simulated = true;
@@ -257,7 +257,7 @@ public class BallComponent : InteractiveComponent
 
         isRestarted = true;
 
-        //reset the atributes to play HitGroundSound in Update()
+        //reset the attributes to play HitGroundSound in Update()
         m_hitTheGround=false;
         wasGroundSoundPlayed = false;
 
@@ -272,12 +272,12 @@ public class BallComponent : InteractiveComponent
     }
 
 
-   //przyklad metody do zmiany wlasciwosci komponentu Joint
-    public void WylaczJoint()
-    {
-        m_connectedJoint.enabled = false;
-        Debug.Log("joint disabled!");
-    }
+   ////example of a method which changes property of Joint component
+   // public void WylaczJoint()
+   // {
+   //     m_connectedJoint.enabled = false;
+   //     Debug.Log("joint disabled!");
+   // }
 
 
 

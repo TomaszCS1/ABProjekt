@@ -6,9 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameplayManager : Singleton<GameplayManager>
 {
-    //public bool Pause;
-
-
+    
     public enum EGameState
     {
         Playing,
@@ -17,7 +15,7 @@ public class GameplayManager : Singleton<GameplayManager>
 
     private EGameState m_state;
 
-    // ACCESSOR definition of enum GameState of type EGameState (can only have 2 values: Playing and Paused)
+    // ACCESSOR definition of Enum GameState of type EGameState (can only have 2 values: Playing and Paused)
     public EGameState GameState
     {
         get { return m_state; }
@@ -50,7 +48,7 @@ public class GameplayManager : Singleton<GameplayManager>
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
 
-    public static event GameStateCallback OnEscape;
+    public static event GameStateCallback OnKeyEscape;
 
     List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
@@ -89,14 +87,17 @@ public class GameplayManager : Singleton<GameplayManager>
     // Update is called once per frame
     void Update()
     {
-
+        // if hit R initiate function  Restart() 
         if (Input.GetKeyUp(KeyCode.R))
             Restart();
 
-        // if hit Space - change GameState from EGameState.Paused to EGameState.Playing od opposite 
+
+        // if hit SPACE change GameState from EGameState.Paused to EGameState.Playing opposite 
         if (Input.GetKeyUp(KeyCode.Space))
         {
-            if (!isPauseMenuActiv)
+
+            //deactivate and activate HUD buttons when PauseMenu is visible
+            if (!isPauseMenuActiv )
             {
                 OnGamePaused();
                 m_HUD.ButtonsDisable();
@@ -108,24 +109,29 @@ public class GameplayManager : Singleton<GameplayManager>
 
         }
 
-
+        // if hit ESC  
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             // initiate event OnGamePaused(?)
             GameState = EGameState.Paused;
 
            
-            // deactivate HUD buttons when PauseMenu activ
+            // deactivate HUD buttons when PauseMenu active
             if (!isPauseMenuActiv)
             {
                 m_HUD.ButtonsDisable();
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
-            // whe second time Escape sets PauseMenuControl Inaktiv and activvate HUD Buttons
-            else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+            // when second time Escape sets PauseMenuControl Inactive and activate HUD Buttons
+            else 
+            { 
+                m_HUD.ButtonsEnable(); 
+                m_PauseMenuController.OnResume(); 
+                isPauseMenuActiv = !isPauseMenuActiv; 
+            }
 
-            //initiate event: OnEscape
-            OnEscape();
+            //initiate event: OnKeyEscape
+            OnKeyEscape();
 
         }
 
@@ -151,7 +157,7 @@ public class GameplayManager : Singleton<GameplayManager>
         foreach (var restartableObject in m_restartableObjects)
             restartableObject.DoRestart();
      
-        // resetuje punkty
+        // reset points 
         Points = 0;
        }
 

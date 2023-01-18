@@ -16,9 +16,10 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        //after pressing PauseButton, delegate starts PlayPause() function in GM
         PauseButton.onClick.AddListener(delegate {GameplayManager.Instance.PlayPause(); });
-        
+
+        //after pressing RestartButton, delegate starts PlayPause() function in GM
         RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });
 
     }
@@ -29,11 +30,15 @@ public class HUDController : MonoBehaviour
         PointsText.text = "Points: " + points;
     }
 
+
+    //function deactivate HUD buttons, will be called in GM
     public void ButtonsDisable()
     {
         PauseButton.interactable = false;
         RestartButton.interactable = false; 
-    } 
+    }
+
+    //function activates HUD buttons, will be called in GM
     public void ButtonsEnable()
     {
         PauseButton.interactable = true;
