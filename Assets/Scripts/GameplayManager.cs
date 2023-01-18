@@ -35,6 +35,8 @@ public class GameplayManager : Singleton<GameplayManager>
                     {  // if EGameState.Playing starts Event OnGamePlaying
                         if (OnGamePlaying != null)
                             OnGamePlaying();
+                            // activates HUD buttons  after pressing PauseMenuC/resume
+                            m_HUD.ButtonsEnable();
                     }
                     break;
             }
@@ -103,7 +105,12 @@ public class GameplayManager : Singleton<GameplayManager>
                 m_HUD.ButtonsDisable();
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
-            else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+            else 
+            {
+               /* m_HUD.ButtonsEnable();  */          
+                m_PauseMenuController.OnResume(); 
+                isPauseMenuActiv = !isPauseMenuActiv; 
+            }
 
           
 
@@ -129,9 +136,9 @@ public class GameplayManager : Singleton<GameplayManager>
 
             // when second time Escape sets PauseMenuControl inactive and activate HUD Buttons
             else 
-            { 
-                //m_HUD.ButtonsEnable(); //// moved to class PMC OnResume()
-            
+            {
+               /* m_HUD.ButtonsEnable();   */          
+
                 // sets PauseMenu invisible
                 m_PauseMenuController.OnResume();  
                 isPauseMenuActiv = !isPauseMenuActiv; 
