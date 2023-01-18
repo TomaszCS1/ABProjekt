@@ -13,7 +13,7 @@ public class PauseMenuController : MonoBehaviour
     public Button PopupNo;
     public GameObject QuestionPopup1;
 
-
+    public HUDController m_HUD;
 
 
     // Start is called before the first frame update
@@ -59,6 +59,7 @@ public class PauseMenuController : MonoBehaviour
     {
         GameplayManager.Instance.GameState = GameplayManager.EGameState.Playing;
         SetPanelVisible(false);
+        m_HUD.ButtonsEnable();
     }
 
 

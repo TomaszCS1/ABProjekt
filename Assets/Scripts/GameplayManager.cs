@@ -130,10 +130,10 @@ public class GameplayManager : Singleton<GameplayManager>
             // when second time Escape sets PauseMenuControl inactive and activate HUD Buttons
             else 
             { 
-                m_HUD.ButtonsEnable();
+                //m_HUD.ButtonsEnable(); //// moved to class PMC OnResume()
             
-                // set PauseMenu invisible
-                m_PauseMenuController.SetPanelVisible(false);  // works
+                // sets PauseMenu invisible
+                m_PauseMenuController.OnResume();  
                 isPauseMenuActiv = !isPauseMenuActiv; 
             }
 
