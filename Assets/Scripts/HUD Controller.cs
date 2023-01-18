@@ -16,10 +16,10 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //after pressing PauseButton, delegate starts PlayPause() function in GM
+        //after pressing PauseButton, delegate starts PlayPause() function in GameplayManager
         PauseButton.onClick.AddListener(delegate {GameplayManager.Instance.PlayPause(); });
 
-        //after pressing RestartButton, delegate starts PlayPause() function in GM
+        //after pressing RestartButton, delegate starts PlayPause() function in GameplayManager
         RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });
 
     }

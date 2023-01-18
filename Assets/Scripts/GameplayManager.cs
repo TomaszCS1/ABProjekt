@@ -98,29 +98,27 @@ public class GameplayManager : Singleton<GameplayManager>
         if (Input.GetKeyUp(KeyCode.Space))
         {
 
-            //deactivate and activate HUD buttons when PauseMenu is visible
+            // pause the game and disables HUD buttons and pause the game
             if (!isPauseMenuActiv )
             {
                 OnGamePaused();
                 m_HUD.ButtonsDisable();
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
-            else 
+            // when second time press Space - starts the game and enables HUD Buttons 
+            else
             {
-               /* m_HUD.ButtonsEnable();  */          
+                // m_HUD.ButtonsEnable();         //moved after starting              
                 m_PauseMenuController.OnResume(); 
                 isPauseMenuActiv = !isPauseMenuActiv; 
             }
-
-          
-
         }
 
         // if hit ESC  
         if (Input.GetKeyUp(KeyCode.Escape))
         {
             // initiate event: OnGamePaused() and pause the game
-            GameState = EGameState.Paused;
+            OnGamePaused();
 
 
             // initiate event: OpenPauseMenu() which is subscribed by function: OnPause() in class PauseMenuController
@@ -134,17 +132,15 @@ public class GameplayManager : Singleton<GameplayManager>
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
 
-            // when second time Escape sets PauseMenuControl inactive and activate HUD Buttons
+            // when second time press Escape - sets PauseMenuControl inactive and enables HUD Buttons
             else 
             {
-               /* m_HUD.ButtonsEnable();   */          
+               // m_HUD.ButtonsEnable();         //moved after starting      
 
                 // sets PauseMenu invisible
                 m_PauseMenuController.OnResume();  
                 isPauseMenuActiv = !isPauseMenuActiv; 
             }
-
-
 
         }
 
