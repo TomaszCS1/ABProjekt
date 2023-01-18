@@ -22,12 +22,15 @@ public class PauseMenuController : MonoBehaviour
         // AddListener(delegate{method();})
         ResumeButton.onClick.AddListener(delegate { OnResume(); });
 
-        QuitButton.onClick.AddListener(delegate { OnQuit(); });
-
         Panel.SetActive(false);
 
+        // tym miejscu jest zasubskrybowany event OnGamePause w GM, kiedy OnGamPaused startuje, wykonana jest metoda OnPause
+        GameplayManager.OnEscape += OnPause;
 
-        GameplayManager.OnGamePaused += OnPause;
+
+        // quit menu:
+
+        QuitButton.onClick.AddListener(delegate { OnQuit(); });
 
         ResstartMenuButton.onClick.AddListener(delegate { GameplayManager.Instance.Restart(); });
 
@@ -55,11 +58,11 @@ public class PauseMenuController : MonoBehaviour
         SetPanelVisible(true);
     }
 
+
     public void OnResume()
     {
         GameplayManager.Instance.GameState = GameplayManager.EGameState.Playing;
         SetPanelVisible(false);
-
     }
 
 

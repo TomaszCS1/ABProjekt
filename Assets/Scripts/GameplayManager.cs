@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -49,6 +50,8 @@ public class GameplayManager : Singleton<GameplayManager>
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
 
+    public static event GameStateCallback OnEscape;
+
     List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
     private HUDController m_HUD;
@@ -95,11 +98,13 @@ public class GameplayManager : Singleton<GameplayManager>
         {
             if (!isPauseMenuActiv)
             {
-                PlayPause();
+                OnGamePaused();
                 m_HUD.ButtonsDisable();
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
             else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+
+          
 
         }
 
@@ -109,9 +114,7 @@ public class GameplayManager : Singleton<GameplayManager>
             // initiate event OnGamePaused(?)
             GameState = EGameState.Paused;
 
-            //pause the game when PauseMenu activ
-            PlayPause();
-
+           
             // deactivate HUD buttons when PauseMenu activ
             if (!isPauseMenuActiv)
             {
@@ -120,6 +123,9 @@ public class GameplayManager : Singleton<GameplayManager>
             }
             // whe second time Escape sets PauseMenuControl Inaktiv and activvate HUD Buttons
             else { m_HUD.ButtonsEnable(); m_PauseMenuController.OnResume(); isPauseMenuActiv = !isPauseMenuActiv; }
+
+            //initiate event: OnEscape
+            OnEscape();
 
         }
 

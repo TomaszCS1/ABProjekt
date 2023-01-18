@@ -16,11 +16,10 @@ public class HUDController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         PauseButton.onClick.AddListener(delegate {GameplayManager.Instance.PlayPause(); });
         
-        
         RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });
-
 
     }
 
@@ -33,7 +32,7 @@ public class HUDController : MonoBehaviour
     public void ButtonsDisable()
     {
         PauseButton.interactable = false;
-        RestartButton.interactable = false;
+        RestartButton.interactable = false; 
     } 
     public void ButtonsEnable()
     {
