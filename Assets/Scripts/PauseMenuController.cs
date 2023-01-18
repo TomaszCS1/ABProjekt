@@ -26,7 +26,7 @@ public class PauseMenuController : MonoBehaviour
         Panel.SetActive(false);
 
         // subscribes to event: OnGamePause in GM(GameplayManager). After OnGamePaused occurs, function: OnPause() starts 
-        GameplayManager.OnKeyEscape += OnPause;
+        GameplayManager.OpenPauseMenu += OnPause;
 
 
         // quit menu:

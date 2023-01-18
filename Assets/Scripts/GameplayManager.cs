@@ -48,7 +48,7 @@ public class GameplayManager : Singleton<GameplayManager>
     public static event GameStateCallback OnGamePaused;
     public static event GameStateCallback OnGamePlaying;
 
-    public static event GameStateCallback OnKeyEscape;
+    public static event GameStateCallback OpenPauseMenu;
 
     List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
@@ -112,26 +112,32 @@ public class GameplayManager : Singleton<GameplayManager>
         // if hit ESC  
         if (Input.GetKeyUp(KeyCode.Escape))
         {
-            // initiate event OnGamePaused(?)
+            // initiate event: OnGamePaused() and pause the game
             GameState = EGameState.Paused;
 
-           
-            // deactivate HUD buttons when PauseMenu active
+
+            // initiate event: OpenPauseMenu() which is subscribed by function: OnPause() in class PauseMenuController
+            OpenPauseMenu();
+
+
+            // deactivates HUD buttons when PauseMenu active
             if (!isPauseMenuActiv)
             {
                 m_HUD.ButtonsDisable();
                 isPauseMenuActiv = !isPauseMenuActiv;
             }
-            // when second time Escape sets PauseMenuControl Inactive and activate HUD Buttons
+
+            // when second time Escape sets PauseMenuControl inactive and activate HUD Buttons
             else 
             { 
-                m_HUD.ButtonsEnable(); 
-                m_PauseMenuController.OnResume(); 
+                m_HUD.ButtonsEnable();
+            
+                // set PauseMenu invisible
+                m_PauseMenuController.SetPanelVisible(false);  // works
                 isPauseMenuActiv = !isPauseMenuActiv; 
             }
 
-            //initiate event: OnKeyEscape
-            OnKeyEscape();
+
 
         }
 
