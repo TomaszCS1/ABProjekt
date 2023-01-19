@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+
+
 
 public class GameplayManager : Singleton<GameplayManager>
 {
@@ -83,8 +86,41 @@ public class GameplayManager : Singleton<GameplayManager>
         m_HUD = FindObjectOfType<HUDController>();
         Points = 0;
 
+    //Exceptions 
+        /*....*/
+        int[] Test = new int[2] { 0, 0 };
+
+        try
+        {
+            TestThrow();
+            Test[2] = 1;
+            
+        }
+
+        catch (IndexOutOfRangeException e)
+        {
+            Debug.Log("Index Exception: " + e.Message);
+        }
+
+        //catch (Exception e)
+        //{
+        //    Debug.Log("Exception: " + e.Message);
+        //}
+
+        catch (NullReferenceException e)
+        {
+            Debug.Log("Exception NullReferenceException" + e.Message);
+
+        }
+
 
     }
+
+    private void TestThrow()
+    {
+        throw new NullReferenceException("Test exception");
+    }
+
 
     // Update is called once per frame
     void Update()
