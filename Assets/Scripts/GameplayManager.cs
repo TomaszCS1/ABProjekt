@@ -86,40 +86,29 @@ public class GameplayManager : Singleton<GameplayManager>
         m_HUD = FindObjectOfType<HUDController>();
         Points = 0;
 
-    //Exceptions 
-        /*....*/
-        int[] Test = new int[2] { 0, 0 };
-
-        try
-        {
-            TestThrow();
-            Test[2] = 1;
-            
-        }
-
-        catch (IndexOutOfRangeException e)
-        {
-            Debug.Log("Index Exception: " + e.Message);
-        }
-
-        //catch (Exception e)
-        //{
-        //    Debug.Log("Exception: " + e.Message);
-        //}
-
-        catch (NullReferenceException e)
-        {
-            Debug.Log("Exception NullReferenceException" + e.Message);
-
-        }
+    // COURUTINES
+        StartCoroutine(TestCourutine());
 
 
     }
 
-    private void TestThrow()
+   IEnumerator TestCourutine()
     {
-        throw new NullReferenceException("Test exception");
+        while (true)
+        {
+            Debug.Log("Courutine called");
+            yield return null;
+
+        }
+
     }
+
+
+     void Destroy()
+    {
+        StopAllCoroutines();
+    }
+
 
 
     // Update is called once per frame
