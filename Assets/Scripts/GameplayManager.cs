@@ -86,24 +86,33 @@ public class GameplayManager : Singleton<GameplayManager>
         m_HUD = FindObjectOfType<HUDController>();
         Points = 0;
 
-    // COURUTINES
-        StartCoroutine(TestCourutine());
+    // COURUTINES (1) calls coroutine
+        StartCoroutine(TestCouroutine());
 
 
     }
-
-   IEnumerator TestCourutine()
+    // (2) method returns type: IEnumerator
+   IEnumerator TestCouroutine()
     {
+        Debug.Log("Starting TestCoroutine");
+
+        yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("Resuming after 1 second");
+
         while (true)
         {
-            Debug.Log("Courutine called");
-            yield return null;
+            Debug.Log("Coroutine called");
+            Debug.Log("Resuming after 0.5 second");
+            Debug.Log("The number of Frames per second every 0.5 seconds: " + Time.frameCount / Time.time);
 
+            // wait for next frame
+            yield return null;
         }
 
     }
 
-
+    // provides, that coroutine will properly end
      void Destroy()
     {
         StopAllCoroutines();
