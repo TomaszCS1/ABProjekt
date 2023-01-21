@@ -4,6 +4,8 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using System.Threading.Tasks;
+
 
 
 
@@ -87,35 +89,62 @@ public class GameplayManager : Singleton<GameplayManager>
         Points = 0;
 
     // COURUTINES (1) calls coroutine
-        StartCoroutine(TestCouroutine());
+        StartCoroutine(TestCoroutine());
+
+       
+    // ASYNC / AWAIT
+        TestAsync();
 
 
     }
-    // (2) method returns type: IEnumerator
-   IEnumerator TestCouroutine()
+
+
+    // ASYNC method uses keyword: async, return type: void
+    async void TestAsync()
     {
-        Debug.Log("Starting TestCoroutine");
+        Debug.Log("Starting async method");
 
-        yield return new WaitForSeconds(0.5f);
+        // method uses keyword: await from type: awaitable
+        await Task.Delay(TimeSpan.FromSeconds(3)); //task.Delay - async for (limited time)
 
-        Debug.Log("Resuming after 1 second");
-
-        while (true)
-        {
-            Debug.Log("Coroutine called");
-            Debug.Log("Resuming after 0.5 second");
-            Debug.Log("The number of Frames per second every 0.5 seconds: " + Time.frameCount / Time.time);
-
-            // wait for next frame
-            yield return null;
-        }
-
+        Debug.Log("Async done after 3 seconds");
     }
+
+
+    // (2) method returns type: IEnumerator
+    //IEnumerator TestCoroutine()
+    //{
+    //    Debug.Log("Starting TestCoroutine");
+
+    //    yield return new WaitForSeconds(0.5f);
+
+    //    Debug.Log("Resuming after 1 second");
+
+    //    while (true)
+    //    {
+    //        Debug.Log("Coroutine called");
+    //        Debug.Log("Resuming after 0.5 second");
+    //        Debug.Log("The number of Frames per second every 0.5 seconds: " + Time.frameCount / Time.time);
+
+    //        // wait for next frame
+    //        yield return null;
+    //    }
+
+    //}
 
     // provides, that coroutine will properly end
-     void Destroy()
+    void Destroy()
     {
         StopAllCoroutines();
+    }
+
+
+
+    IEnumerator TestCoroutine()
+    {
+        Debug.Log("Starting coroutine method");
+        yield return new WaitForSeconds(3);
+        Debug.Log("Coroutine done after 3 seconds");
     }
 
 
