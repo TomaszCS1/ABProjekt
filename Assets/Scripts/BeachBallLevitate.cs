@@ -24,6 +24,7 @@ public class BeachBallLevitate : MonoBehaviour
         m_startPosition = transform.position;
 
         StartCoroutine(BallCoroutine());
+
     }
 
     void Update()
@@ -51,17 +52,27 @@ public class BeachBallLevitate : MonoBehaviour
             m_curXYScale = Mathf.PingPong(Time.time, ScaleAmplitude) + 1.0f;
             transform.localScale = new Vector3(m_curXYScale, m_curXYScale, 1);
 
-            if (m_previousYPos >= 0 && m_curYPos<0)
+            if (m_previousYPos < 0 && m_curYPos > 0)
             {
-                Debug.Log("if statement executed");
-                yield return new WaitForSeconds(1f);
+                //holds executing for one second
+                yield return new WaitForSeconds(1.0f);
 
             }
+            else
+            {
+                //release executing in next frame, without this statement while(true) will be executed infinitively
+                yield return null;
+            };
 
             m_previousYPos = m_curYPos;
 
 
         }
+    }
+
+    void Destroy()
+    {
+        StopAllCoroutines();
     }
 
 }
