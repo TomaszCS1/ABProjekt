@@ -107,8 +107,32 @@ public class BallComponent : InteractiveComponent
 
         m_particleAtraktor = GetComponentInChildren<ParticleSystem>();
 
+        StartCoroutine(SpringJointCoroutine());
+
+    }
+
+    IEnumerator SpringJointCoroutine()
+    {
+        while (true)
+        {
+            Debug.Log("Frame: " + Time.frameCount);
+
+        
+                if (Time.frameCount % 2 == 0)
+                {
+                    if (transform.position.x > m_connectedBody.transform.position.x + SlingStart)
+                    {
+                        m_connectedJoint.enabled = false;
+                        //yield return null;
+                        Debug.Log("joint2D disabled: ");
+                    }
 
 
+                }
+
+            yield return new WaitUntil( ()=>(Time.frameCount % 2 == 0));
+
+        }
     }
 
 
@@ -118,7 +142,7 @@ public class BallComponent : InteractiveComponent
 
         if (transform.position.x > m_connectedBody.transform.position.x + SlingStart) // jesli pozycja kuli osiagnie wieksza wartosc niz pozycja punktu sprezynowego
         {
-            m_connectedJoint.enabled = false;                                         // wylacz polaczenie sprezynowe  po wystrzeleniu kuli
+            /*m_connectedJoint.enabled = false;      */                                   // wylacz polaczenie sprezynowe  po wystrzeleniu kuli
 
             m_lineRenderer.enabled = false;                                           // wylacz renderer po wystrzeleniu kuli
 
@@ -133,8 +157,9 @@ public class BallComponent : InteractiveComponent
     }
 
 
+ 
 
-    public void OnCollisionEnter2D(Collision2D collision)
+        public void OnCollisionEnter2D(Collision2D collision)
 
     {
         //collision with collision layer "Ground"
