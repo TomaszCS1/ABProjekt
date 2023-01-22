@@ -84,6 +84,8 @@ public class PauseMenuController : MonoBehaviour
 
     public void OnPopupYes()
     {
+
+
         Application.Quit();
 
     }

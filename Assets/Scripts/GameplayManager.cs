@@ -71,10 +71,14 @@ public class GameplayManager : Singleton<GameplayManager>
         {
             m_points = value;
             m_HUD.UpdatePoints(m_points);
+            LifetimeHits = m_points;
         }
     }
 
     private bool isPauseMenuActiv = false;
+
+
+    private int LifetimeHits;
 
 
     // Start is called before the first frame update

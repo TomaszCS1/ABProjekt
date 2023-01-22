@@ -32,7 +32,7 @@ public class HUDController : MonoBehaviour
     }
 
 
-    //function deactivate HUD buttons, will be called in GM
+    //function deactivates HUD buttons, will be called in GM
     public void ButtonsDisable()
     {
         PauseButton.interactable = false;
