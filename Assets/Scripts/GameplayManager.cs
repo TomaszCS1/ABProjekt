@@ -88,49 +88,61 @@ public class GameplayManager : Singleton<GameplayManager>
         m_HUD = FindObjectOfType<HUDController>();
         Points = 0;
 
-    // COURUTINES (1) calls coroutine
-        StartCoroutine(TestCoroutine());
 
-       
-    // ASYNC / AWAIT
-        TestAsync();
+        //// COURUTINES (1) calls coroutine
+        //StartCoroutine(TestCoroutine());
 
+
+        // ASYNC / AWAIT
+        SecondTestAsync();
 
     }
 
 
-    // ASYNC method uses keyword: async, return type: void
-    async void TestAsync()
+    // ASYNC 
+    async Task TestAsync()
     {
         Debug.Log("Starting async method");
 
-        // method uses keyword: await from type: awaitable
-        await Task.Delay(TimeSpan.FromSeconds(3)); //task.Delay - async for (limited time)
+        await Task.Delay(TimeSpan.FromSeconds(3)); 
 
         Debug.Log("Async done after 3 seconds");
     }
 
 
-    // (2) method returns type: IEnumerator
-    //IEnumerator TestCoroutine()
-    //{
-    //    Debug.Log("Starting TestCoroutine");
+    async void SecondTestAsync()
+    {
+        Debug.Log("Staring second async method");
 
-    //    yield return new WaitForSeconds(0.5f);
+        await TestAsync();
 
-    //    Debug.Log("Resuming after 1 second");
+        Debug.Log("SecondTestAsync");
 
-    //    while (true)
-    //    {
-    //        Debug.Log("Coroutine called");
-    //        Debug.Log("Resuming after 0.5 second");
-    //        Debug.Log("The number of Frames per second every 0.5 seconds: " + Time.frameCount / Time.time);
 
-    //        // wait for next frame
-    //        yield return null;
-    //    }
+    }
 
-    //}
+
+
+    // method returns type: IEnumerator
+   IEnumerator TestCoroutine()
+    {
+        Debug.Log("Starting TestCoroutine");
+
+        yield return new WaitForSeconds(0.5f);
+
+        Debug.Log("Resuming after 1 second");
+
+        while (true)
+        {
+            Debug.Log("Coroutine called");
+            Debug.Log("Resuming after 0.5 second");
+            Debug.Log("The number of Frames per second every 0.5 seconds: " + Time.frameCount / Time.time);
+
+            // wait for next frame
+            yield return null;
+        }
+
+    }
 
     // provides, that coroutine will properly end
     void Destroy()
@@ -140,12 +152,12 @@ public class GameplayManager : Singleton<GameplayManager>
 
 
 
-    IEnumerator TestCoroutine()
-    {
-        Debug.Log("Starting coroutine method");
-        yield return new WaitForSeconds(3);
-        Debug.Log("Coroutine done after 3 seconds");
-    }
+    //IEnumerator TestCoroutine()
+    //{
+    //    Debug.Log("Starting coroutine method");
+    //    yield return new WaitForSeconds(3);
+    //    Debug.Log("Coroutine done after 3 seconds");
+    //}
 
 
 
