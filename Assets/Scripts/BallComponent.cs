@@ -115,7 +115,7 @@ public class BallComponent : InteractiveComponent
     {
         while (true)
         {
-            Debug.Log("Frame: " + Time.frameCount);
+            //Debug.Log("Frame: " + Time.frameCount);
 
         
                 if (Time.frameCount % 2 == 0)
@@ -124,10 +124,10 @@ public class BallComponent : InteractiveComponent
                     {
                         m_connectedJoint.enabled = false;
                         //yield return null;
-                        Debug.Log("joint2D disabled: ");
+                        //Debug.Log("joint2D disabled: ");
                     }
 
-
+                       
                 }
 
             yield return new WaitUntil( ()=>(Time.frameCount % 2 == 0));

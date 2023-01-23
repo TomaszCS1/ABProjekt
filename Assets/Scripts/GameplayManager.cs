@@ -5,6 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
 using System.Threading.Tasks;
+using Unity.Mathematics;
 
 
 
@@ -60,7 +61,7 @@ public class GameplayManager : Singleton<GameplayManager>
     List<IRestartableObject> m_restartableObjects = new List<IRestartableObject>();
 
     private HUDController m_HUD;
-    private int m_points = 0;
+    public int m_points = 0;
 
     public PauseMenuController m_PauseMenuController;
 
@@ -77,8 +78,15 @@ public class GameplayManager : Singleton<GameplayManager>
 
     private bool isPauseMenuActiv = false;
 
-
     private int LifetimeHits;
+
+    //PREFABS
+    //public GameObject PrefabRef;
+    public GameObject PrefabSimpleAnim;
+
+    //this field stores reference to game settings
+    public GameSettingsDatabase GameDatabase;
+
 
 
     // Start is called before the first frame update
@@ -100,6 +108,11 @@ public class GameplayManager : Singleton<GameplayManager>
         // ASYNC / AWAIT
         SecondTestAsync();
 
+
+        GameObject.Instantiate(GameDatabase.TargetPrefab, new Vector3(7.5f,4.0f,0.0f), Quaternion.identity);
+
+        GameObject.Instantiate(PrefabSimpleAnim, new Vector3(-14.0f,0,0f), Quaternion.Euler(0,0,0));
+        //GetAllResttartableObject();
     }
 
 

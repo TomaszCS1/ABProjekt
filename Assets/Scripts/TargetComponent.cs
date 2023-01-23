@@ -114,6 +114,8 @@ public class TargetComponent :  InteractiveComponent
             // adds point after every collision with every game object on layer Target
             GameplayManager.Instance.Points += 1;
 
+            GameObject.Destroy(this.gameObject, 1.0f);
+
         }
 
        
