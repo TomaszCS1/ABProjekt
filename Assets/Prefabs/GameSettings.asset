@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   TargetPrefab: {fileID: 3396664385456098434, guid: 24874b79c7595914eaf9e1ad43c5e78d, type: 3}
-  PullSound: {fileID: 8300000, guid: ba0f838c39456b34d97ab8347bdce6fa, type: 3}
-  ShootSound: {fileID: 8300000, guid: 6a8a5e7addae36d448ca67875bf6a915, type: 3}
-  RestartSound: {fileID: 8300000, guid: d07bda0388937894ea0b612c619f3121, type: 3}
+  PullSound: {fileID: 0}
+  ShootSound: {fileID: 0}
+  RestartSound: {fileID: 0}

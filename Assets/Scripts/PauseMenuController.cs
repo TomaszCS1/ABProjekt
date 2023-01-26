@@ -15,6 +15,7 @@ public class PauseMenuController : MonoBehaviour
 
     //public HUDController m_HUD;
 
+    public MainMenuController m_mainMenuController;
 
     // Start is called before the first frame update
     void Start()
@@ -84,8 +85,8 @@ public class PauseMenuController : MonoBehaviour
 
     public void OnPopupYes()
     {
-
-
+              
+        m_mainMenuController.MainPanel.SetActive(true);
         Application.Quit();
 
     }

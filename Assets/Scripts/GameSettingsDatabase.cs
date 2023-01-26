@@ -3,27 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//attribute of the class
+//[attribute of the class] together wit heritence from Scriptable object allows to create instances of class in menu Assets /ScriptableObjects /Create Game Settings
 [CreateAssetMenu(fileName ="GameSettings", menuName = "ScriptableObjects/Create Game Settings", order =1)]
 public class GameSettingsDatabase: ScriptableObject
 {
+
+    [Header("Prefabs")]
     public GameObject TargetPrefab;
 
+    [Header("ScriptableObjects")]
+    public AudioClip PullSound;
 
+    public AudioClip ShootSound;
+
+    public AudioClip RestartSound;
 
 }
-
-//public class GameSettingsDatabase : MonoBehaviour
-//{
-//    // Start is called before the first frame update
-//    void Start()
-//    {
-
-//    }
-
-//    // Update is called once per frame
-//    void Update()
-//    {
-
-//    }
-//}

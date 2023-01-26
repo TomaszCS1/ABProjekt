@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class TargetComponent :  InteractiveComponent
@@ -7,7 +8,7 @@ public class TargetComponent :  InteractiveComponent
 
     //public bool m_hitThePlank = false;
 
-    //protected Rigidbody2D m_rigidbody;
+    //private Rigidbody2D m_rigidbody; /* field moved to interactive component, cannot be serialised in this class*/
 
     // uses particle system "ParticleHitPlanks" from Planks
     public ParticleSystem m_particlesHitPlank;
@@ -26,15 +27,15 @@ public class TargetComponent :  InteractiveComponent
     public TargetComponent plankSpriteRight;
     public TargetComponent plankSpriteUpper;
 
-    //public AudioClip HitTheGroundSound;
-    //private AudioSource m_audioSource;
+    public GameSettingsDatabase GameDatabase;
 
+    public GameObject PrefabRef;
 
     // START 
     public override void Start()
     {
         base.Start();
-
+        
         //m_particlesHitPlank = GetComponent<ParticleSystem>();
         m_rigidbody = GetComponent<Rigidbody2D>();
 
@@ -46,6 +47,7 @@ public class TargetComponent :  InteractiveComponent
 
         // przypisanie komponentu AudioSource do zmiennej m_audioSource
         m_audioSource = GetComponent<AudioSource>();
+
 
     }
 
@@ -68,23 +70,37 @@ public class TargetComponent :  InteractiveComponent
     {
         base.DoRestart();
 
+        ////if(plankSpriteLeft != null)
+        ////{
+
         plankSpriteLeft.transform.localPosition = m_startPositionPlankLeft;
         plankSpriteLeft.transform.localRotation = m_startRotationPlankLeft;
+        //}
 
+        //if(plankSpriteRight != null)
+        //{
         plankSpriteRight.transform.localPosition = m_startPositionPlankRight;
         plankSpriteRight.transform.localRotation = m_startRotationPlankRight;
+        //}
 
+        //if(plankSpriteUpper != null)
+        //{
         plankSpriteUpper.transform.localPosition = m_startPositionPlankUpper;
         plankSpriteUpper.transform.localRotation = m_startRotationPlankUpper;
+
+        
+        //GameObject.Instantiate(GameDatabase.TargetPrefab, new Vector3(7.5f, 7.0f, 0.0f), Quaternion.identity);
+   
+
+
 
     }
 
 
-    // this method removes functions DoPouse() and DoPlay() from Event: OnGamePaused and Event: OnGamePlaying when a Scene or game ends
     public override void OnDestroy()
     {
-        //GameplayManager.OnGamePaused -= DoPause;  //moved to InteractiveComponent
-        //GameplayManager.OnGamePlaying -= DoPlay;  //moved to InteractiveComponent
+        base.OnDestroy();
+      
     }
 
 
@@ -114,7 +130,8 @@ public class TargetComponent :  InteractiveComponent
             // adds point after every collision with every game object on layer Target
             GameplayManager.Instance.Points += 1;
 
-            GameObject.Destroy(this.gameObject, 1.0f);
+            // destroy planks after collision
+            //GameObject.Destroy(this.gameObject);
 
         }
 

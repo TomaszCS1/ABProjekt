@@ -81,10 +81,9 @@ public class GameplayManager : Singleton<GameplayManager>
     private int LifetimeHits;
 
     //PREFABS
-    //public GameObject PrefabRef;
-    public GameObject PrefabSimpleAnim;
+     public GameObject PrefabSimpleAnim;
 
-    //this field stores reference to game settings
+    //this field holds reference to game settings (to class GameSettingsDatabase)
     public GameSettingsDatabase GameDatabase;
 
 
@@ -106,37 +105,39 @@ public class GameplayManager : Singleton<GameplayManager>
 
 
         // ASYNC / AWAIT
-        SecondTestAsync();
+        //SecondTestAsync();
 
 
-        GameObject.Instantiate(GameDatabase.TargetPrefab, new Vector3(7.5f,4.0f,0.0f), Quaternion.identity);
+        GameObject.Instantiate(GameDatabase.TargetPrefab, new Vector3(7.5f, 6.0f, 0.0f), Quaternion.identity);
 
         GameObject.Instantiate(PrefabSimpleAnim, new Vector3(-14.0f,0,0f), Quaternion.Euler(0,0,0));
+
+        
         //GetAllResttartableObject();
     }
 
 
     // ASYNC 
-    async Task TestAsync()
-    {
-        Debug.Log("Starting async method");
+    //async Task TestAsync()
+    //{
+    //    Debug.Log("Starting async method");
 
-        await Task.Delay(TimeSpan.FromSeconds(3)); 
+    //    await Task.Delay(TimeSpan.FromSeconds(3)); 
 
-        Debug.Log("Async done after 3 seconds");
-    }
-
-
-    async void SecondTestAsync()
-    {
-        Debug.Log("Staring second async method");
-
-        await TestAsync();
-
-        Debug.Log("SecondTestAsync");
+    //    Debug.Log("Async done after 3 seconds");
+    //}
 
 
-    }
+    //async void SecondTestAsync()
+    //{
+    //    Debug.Log("Staring second async method");
+
+    //    await TestAsync();
+
+    //    Debug.Log("SecondTestAsync");
+
+
+    //}
 
 
 
@@ -183,7 +184,12 @@ public class GameplayManager : Singleton<GameplayManager>
     {
         // if hit R initiate function  Restart() 
         if (Input.GetKeyUp(KeyCode.R))
+        {
+            //GetAllRestartableObjects();
             Restart();
+
+
+        }
 
 
         // if hit SPACE change GameState from EGameState.Paused to EGameState.Playing opposite 

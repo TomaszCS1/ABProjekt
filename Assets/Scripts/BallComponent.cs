@@ -1,21 +1,18 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using Unity.Mathematics;
 using UnityEngine;
 
 public class BallComponent : InteractiveComponent
 {
+    //protected Rigidbody2D m_rigidbody; /*field moved to interactive component, cannot be serialised in this class 
 
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;
 
-    //private AudioSource m_audioSource;
-    public AudioClip PullSound;
-    public AudioClip ShootSound;
-    public AudioClip RestartSound;
-    //public AudioClip HitTheGroundSound;
-    
 
     public enum BallInstruction
     {
@@ -71,6 +68,11 @@ public class BallComponent : InteractiveComponent
 
     public bool wasBallOnGround =false;
 
+    //this field holds reference to game settings (to class GameSettingsDatabase)
+    public GameSettingsDatabase GameDatabase;
+
+   
+    
 
     // START
     public override void Start()
@@ -203,7 +205,7 @@ public class BallComponent : InteractiveComponent
 
     private void OnMouseDown()
     {
-        m_audioSource.PlayOneShot(PullSound);
+        m_audioSource.PlayOneShot(clip:  GameDatabase.PullSound);
     }
 
     private void OnMouseDrag()
@@ -248,9 +250,11 @@ public class BallComponent : InteractiveComponent
     // function initiated after releasing LMB -> shoots BallComponent
     private void OnMouseUp()
     {
+        AudioClip m_shotSound = GameDatabase.ShootSound;
+
         m_rigidbody.simulated = true;
 
-        m_audioSource.PlayOneShot(ShootSound);
+        m_audioSource.PlayOneShot(m_shotSound);
 
         m_particles.Play();
 
@@ -278,7 +282,7 @@ public class BallComponent : InteractiveComponent
         SetLineRendererPoints();
 
         // plays Restart Sound 
-        m_audioSource.PlayOneShot(RestartSound);
+        m_audioSource.PlayOneShot(GameDatabase.RestartSound);
 
         isRestarted = true;
 
