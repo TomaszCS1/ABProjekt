@@ -61,11 +61,22 @@ public class SaveManager : Singleton<SaveManager>
             BinaryFormatter binFormatt= new BinaryFormatter();
             SaveData = (GameSaveData)binFormatt.Deserialize(file);
             file.Close();
+
+            ApplySettings();
         }
         else
         {
             SaveData.m_timeSinceLastSave=0.0f;
+
+            SaveData.m_masterVolume = AudioListener.volume;
+
         }
+
+    }
+
+    public void ApplySettings()
+    {
+        SaveData.m_masterVolume = AudioListener.volume;
 
     }
 
@@ -80,6 +91,8 @@ public class SaveManager : Singleton<SaveManager>
     void Start()
     {
         SaveData.m_timeSinceLastSave = 0.0f;
+        //stores the value of lasz saved volume
+        SaveData.m_masterVolume = AudioListener.volume;
         LoadSettings();
 
         m_pathBin = Path.Combine(Application.persistentDataPath, "save.bin");
@@ -99,6 +112,7 @@ public struct GameSaveData
 {
     public float m_timeSinceLastSave;
 
+    public float m_masterVolume;
 
 
 }
