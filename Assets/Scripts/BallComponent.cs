@@ -8,7 +8,7 @@ using UnityEngine;
 
 public class BallComponent : InteractiveComponent
 {
-    //protected Rigidbody2D m_rigidbody; /*field moved to interactive component, cannot be serialised in this class 
+    //protected Rigidbody2D m_rigidbody; /*field moved to interactive component, cannot be serialized in this class 
 
     public float rotationSpeed = 5f;
     public Vector3 vecRotation = Vector3.forward;

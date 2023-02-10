@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-//[attribute of the class] together wit heritence from Scriptable object allows to create instances of class in menu Assets /ScriptableObjects /Create Game Settings
+//[attribute of the class] together with inheritance from Scriptable object allows to create instances of class in menu Assets /ScriptableObjects /Create Game Settings
 [CreateAssetMenu(fileName ="GameSettings", menuName = "ScriptableObjects/Create Game Settings", order =1)]
 public class GameSettingsDatabase: ScriptableObject
 {
