@@ -8,6 +8,7 @@ public class HUDController : MonoBehaviour
 {
     public Button PauseButton; 
     public Button RestartButton;
+    public Button LoadSpriteButton;
 
     public TMPro.TextMeshProUGUI PointsText;
 
@@ -20,7 +21,10 @@ public class HUDController : MonoBehaviour
         PauseButton.onClick.AddListener(delegate {GameplayManager.Instance.PlayPause(); });
 
         //after pressing RestartButton, delegate starts PlayPause() function in GameplayManager
-        RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });
+        RestartButton.onClick.AddListener(delegate {GameplayManager.Instance.Restart(); });  
+        
+        //after pressing RestartButton, delegate starts PlayPause() function in GameplayManager
+        //RestartButton.onClick.AddListener(delegate {SpriteAssetLoader.Instance.GetSprite(spriteName); });
 
     }
 
