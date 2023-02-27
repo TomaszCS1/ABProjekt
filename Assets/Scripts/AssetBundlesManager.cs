@@ -16,6 +16,9 @@ public class AssetBundlesManager : Singleton<AssetBundlesManager>
     //URL asset bundle address
     public string assetBundleURL;
 
+    public uint abVersion;
+
+
 
     private void Start()
     {
@@ -32,7 +35,7 @@ public class AssetBundlesManager : Singleton<AssetBundlesManager>
 
     private IEnumerator LoadAssetsFromURL() 
     { 
-        UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(assetBundleURL);
+        UnityWebRequest uwr = UnityWebRequestAssetBundle.GetAssetBundle(assetBundleURL, abVersion, 0);
         uwr.SetRequestHeader("Content-Type", "application/json");
         uwr.SetRequestHeader("User-Agent", "DefaultBrowser");
 
@@ -49,6 +52,8 @@ public class AssetBundlesManager : Singleton<AssetBundlesManager>
         }
 
         Debug.Log(ab == null ? "Failed to download Asset Bundle" : "Asset bundle downloaded");
+        Debug.Log("Downloaded bytes : " + uwr.downloadedBytes);
+
     }
 
 

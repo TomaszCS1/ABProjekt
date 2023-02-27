@@ -8,7 +8,7 @@ public class SpriteAssetLoader : Singleton<SpriteAssetLoader>
 
     //public Sprite GetSprite(spriteName)
     //{
-       
+
     //}
 
 
