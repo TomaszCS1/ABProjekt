@@ -1,22 +1,55 @@
-using System.Collections;
+ using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class SpriteAssetLoader : Singleton<SpriteAssetLoader>
 {
-    string spriteName;
+    public string spriteName;
 
-    //public Sprite GetSprite(spriteName)
-    //{
+    private AssetBundle ab;
 
-    //}
-
-
-    // Start is called before the first frame update
-    void Start()
+    private IEnumerator Start()
     {
+        
+            AssetBundleCreateRequest abcr;
+
+            string path = Path.Combine(Application.streamingAssetsPath, spriteName);
+
+            abcr = AssetBundle.LoadFromFileAsync(path);
+
+            yield return abcr;
+
+            ab = abcr.assetBundle;
+
         
     }
 
-    
+
+    private IEnumerator LoadAssetOnHduButton()
+    {
+        {
+            AssetBundleCreateRequest abcr;
+
+            string path = Path.Combine(Application.streamingAssetsPath, spriteName);
+
+            abcr = AssetBundle.LoadFromFileAsync(path);
+
+            yield return abcr;
+
+            ab = abcr.assetBundle;
+
+        }
+
+    }
+
+
+
+    public Sprite GetSprite( string spriteName)
+    {
+        return ab.LoadAsset<Sprite>(spriteName);
+    }
+
+   
+
 }
